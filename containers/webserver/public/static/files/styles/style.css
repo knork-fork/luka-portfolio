@@ -12,8 +12,8 @@
   --color-text: #1c1917;
   --color-text-secondary: #57534e;
   --color-text-tertiary: #a8a29e;
-  --color-accent: #1c1917;
-  --color-accent-hover: #44403c;
+  --color-accent: #2563eb;
+  --color-accent-hover: #1d4ed8;
   --color-border: #e7e5e4;
   --color-link: #1c1917;
   --color-link-hover: #57534e;
@@ -69,9 +69,12 @@ body {
   transition: color 0.2s;
 }
 
-.navbar-links a:hover,
-.navbar-links a.active {
+.navbar-links a:hover {
   color: var(--color-text);
+}
+
+.navbar-links a.active {
+  color: var(--color-accent);
 }
 
 /* --- Layout --- */
@@ -87,10 +90,10 @@ body {
 /* --- Typography --- */
 
 h1 {
-  font-size: 1.75rem;
+  font-size: 2.75rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
 }
 
 h2 {
@@ -136,8 +139,9 @@ a:hover {
 }
 
 .hero-tagline {
-  font-size: 1.05rem;
-  color: var(--color-text-secondary);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--color-text);
   margin-bottom: 1.5rem;
   max-width: 480px;
 }
@@ -150,12 +154,12 @@ a:hover {
 }
 
 .hero-body a {
-  color: var(--color-text-secondary);
+  color: var(--color-accent);
   font-weight: 500;
 }
 
 .hero-body a:hover {
-  color: var(--color-text);
+  color: var(--color-accent-hover);
 }
 
 /* --- Contact links --- */
@@ -200,8 +204,8 @@ a:hover {
 }
 
 .featured-card:hover {
-  border-color: var(--color-text-tertiary);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  border-color: var(--color-accent);
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.1);
 }
 
 .featured-thumbnail {
@@ -233,8 +237,8 @@ a:hover {
   font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--color-text-tertiary);
-  background: var(--color-bg);
+  color: var(--color-accent);
+  background: rgba(37, 99, 235, 0.06);
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
   margin-top: 0.75rem;
@@ -245,13 +249,13 @@ a:hover {
   margin-top: 1rem;
   font-size: 0.85rem;
   font-weight: 500;
-  color: var(--color-text-secondary);
+  color: var(--color-accent);
   text-decoration: none;
   transition: color 0.2s;
 }
 
 .more-projects-link:hover {
-  color: var(--color-text);
+  color: var(--color-accent-hover);
 }
 
 /* --- Footer --- */
@@ -309,6 +313,6 @@ a:hover {
   }
 
   h1 {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
 }
