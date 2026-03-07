@@ -1,0 +1,19 @@
+services:
+    webserver:
+        container_name: portfolio-webserver
+        restart: unless-stopped
+        image: nginx:latest
+        working_dir: /application
+        volumes:
+            - './containers/webserver:/application'
+            - './containers/webserver/config/nginx.conf:/etc/nginx/conf.d/default.conf'
+            - './var/logs/nginx:/var/log/nginx'
+        ports:
+            - "20242:80"
+
+    #blog:
+    #    container_name: portfolio-grav
+    #    restart: unless-stopped
+    #    image: getgrav/grav
+    #    volumes:
+    #        - ./containers/blog/site:/var/www/html
