@@ -143,14 +143,13 @@ a:hover {
   font-weight: 500;
   color: var(--color-text);
   margin-bottom: 1.5rem;
-  max-width: 480px;
 }
 
 .hero-body {
   font-size: 0.9rem;
   color: var(--color-text-tertiary);
   line-height: 1.8;
-  max-width: 480px;
+  margin-bottom: 0.5rem;
 }
 
 .hero-body a {
