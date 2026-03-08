@@ -441,6 +441,10 @@ a:hover {
   cursor: pointer;
 }
 
+.showcase-screenshot.align-left {
+  background-position: left center;
+}
+
 .showcase-screenshot::after {
   content: '';
   position: absolute;
