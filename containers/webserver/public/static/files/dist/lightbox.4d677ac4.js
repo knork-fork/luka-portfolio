@@ -19,10 +19,17 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   document.querySelectorAll('.showcase-screenshot').forEach(function (el) {
-    el.addEventListener('click', function () {
+    el.addEventListener('click', function (e) {
+      e.stopPropagation();
       var bg = el.style.backgroundImage;
       var match = bg.match(/url\(["']?(.+?)["']?\)/);
       if (match) open(match[1]);
+    });
+  });
+
+  document.querySelectorAll('.showcase-card').forEach(function (card) {
+    card.addEventListener('click', function () {
+      card.classList.toggle('expanded');
     });
   });
 
