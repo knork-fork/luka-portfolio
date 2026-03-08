@@ -11,7 +11,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
   <link rel="icon" type="image/x-icon" href="/static/favicon/favicon.ico">
-  <link rel="stylesheet" href="/static/dist/style.8503021d.css" data-build="style.css">
+  <link rel="stylesheet" href="/static/dist/style.1976ad4a.css" data-build="style.css">
 </head>
 <body>
 
@@ -24,11 +24,112 @@
     </ul>
   </nav>
 
-  <main class="page" style="display: flex; align-items: center; justify-content: center; flex: 1;">
-    <section style="text-align: center;">
-      <h1 style="font-size: 3rem; margin-bottom: 0.5rem;">Under Construction</h1>
-      <p style="color: var(--text-secondary, #888); font-size: 1.125rem;">Project portfolio is coming soon. Stay tuned!</p>
+  <main class="page">
+
+    <section class="projects-hero">
+      <h1>Projects</h1>
+      <p class="projects-subtitle">A selection of things I've built, from side projects to production tools.</p>
     </section>
+
+    <section class="showcase">
+      <h2>Featured</h2>
+
+      <div class="showcase-list">
+
+        <div class="showcase-card">
+          <div class="showcase-body">
+            <h3>ZET Uživo</h3>
+            <p>Real-time ZET tram and bus tracker for Zagreb. Shows live vehicle locations on a map together with stops and line information.</p>
+            <div class="showcase-links">
+              <a href="https://zet-uzivo.com" target="_blank" rel="noopener">Live</a>
+              <a href="https://github.com/knork-fork/zet-gtfs-backend" target="_blank" rel="noopener">GitHub</a>
+              <a href="/blog">Blog</a>
+            </div>
+            <span class="showcase-tag">Production Infrastructure</span>
+          </div>
+          <div class="showcase-screenshot" style="background-image: url('/static/images/zetuzivo.jpg')"></div>
+        </div>
+
+        <div class="showcase-card">
+          <div class="showcase-body">
+            <h3>queue-consumer</h3>
+            <p>Symfony Messenger worker for background job orchestration. Supports YAML-defined jobs, queue routing, and lifecycle callbacks for building reusable processing pipelines.</p>
+            <div class="showcase-links">
+              <a href="https://github.com/knork-fork/queue-consumer" target="_blank" rel="noopener">GitHub</a>
+            </div>
+            <span class="showcase-tag">Distributed Systems</span>
+          </div>
+          <div class="showcase-screenshot" style="background-image: url('/static/images/queueconsumer.jpg')"></div>
+        </div>
+
+        <div class="showcase-card">
+          <div class="showcase-body">
+            <h3>RAGu</h3>
+            <p>to-do</p>
+            <div class="showcase-links">
+              <a href="https://github.com/knork-fork/ragu_project" target="_blank" rel="noopener">GitHub</a>
+              <a href="/blog">Blog</a>
+            </div>
+            <span class="showcase-tag">AI Infrastructure</span>
+          </div>
+          <div class="showcase-screenshot" style="background-image: url('/static/images/zetuzivo.jpg')"></div>
+        </div>
+
+        <div class="showcase-card">
+          <div class="showcase-body">
+            <h3>Tasker</h3>
+            <p>to-do</p>
+            <div class="showcase-links">
+              <a href="https://github.com/knork-fork" target="_blank" rel="noopener">GitHub</a>
+            </div>
+            <span class="showcase-tag">Developer Tooling</span>
+          </div>
+          <div class="showcase-screenshot" style="background-image: url('/static/images/zetuzivo.jpg')"></div>
+        </div>
+
+        <div class="showcase-card">
+          <div class="showcase-body">
+            <h3>Mojave Online</h3>
+            <p>to-do</p>
+            <div class="showcase-links">
+              <a href="https://github.com/knork-fork/mojave-online" target="_blank" rel="noopener">GitHub</a>
+            </div>
+            <span class="showcase-tag">Reverse Engineering</span>
+          </div>
+          <div class="showcase-screenshot" style="background-image: url('/static/images/zetuzivo.jpg')"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="other-projects">
+      <h2>Other Projects</h2>
+
+      <div class="other-grid">
+
+        <a class="other-card" href="https://github.com/knork-fork/cutlery" target="_blank" rel="noopener">
+          <h3>Cutlery</h3>
+          <p>to-do</p>
+        </a>
+
+        <a class="other-card" href="https://github.com/knork-fork/load-environment" target="_blank" rel="noopener">
+          <h3>load-environment</h3>
+          <p>to-do</p>
+        </a>
+
+        <a class="other-card" href="https://github.com/knork-fork/listing-scrapper" target="_blank" rel="noopener">
+          <h3>listing-scrapper</h3>
+          <p>to-do</p>
+        </a>
+
+        <a class="other-card" href="https://github.com/knork-fork/bekdur" target="_blank" rel="noopener">
+          <h3>Bekdur</h3>
+          <p>to-do</p>
+        </a>
+
+      </div>
+    </section>
+
   </main>
 
   <footer class="footer">
@@ -47,5 +148,6 @@
     <span class="footer-copy">&copy; 2026 Luka Knežić</span>
   </footer>
 
+  <script src="/static/dist/lightbox.6a44e759.js" data-build="lightbox.js"></script>
 </body>
 </html>

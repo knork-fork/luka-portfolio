@@ -1,6 +1,0 @@
-projects page
-
-- showcased projects list
-- screenshots
-- short case-study style summaries
-- links to source/live/blog
