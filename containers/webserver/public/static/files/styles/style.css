@@ -546,6 +546,18 @@ a:hover {
   line-height: 1.6;
 }
 
+/* --- Projects page: wider desktop layout --- */
+
+@media (min-width: 1100px) {
+  :root {
+    --max-width: 1100px;
+  }
+
+  .page-projects .showcase-screenshot {
+    width: 420px;
+  }
+}
+
 /* --- Responsive --- */
 
 @media (max-width: 600px) {
