@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function close() {
     overlay.classList.remove('active');
+    overlay.classList.remove('zoomed');
   }
 
   document.querySelectorAll('.showcase-screenshot').forEach(function (el) {
@@ -31,6 +32,11 @@ document.addEventListener('DOMContentLoaded', function () {
     card.addEventListener('click', function () {
       card.classList.toggle('expanded');
     });
+  });
+
+  img.addEventListener('click', function (e) {
+    e.stopPropagation();
+    overlay.classList.toggle('zoomed');
   });
 
   closeBtn.addEventListener('click', close);

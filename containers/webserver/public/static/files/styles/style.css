@@ -497,6 +497,14 @@ a:hover {
   max-height: 80vh;
   border-radius: 6px;
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+  cursor: zoom-in;
+  transition: max-width 0.3s ease, max-height 0.3s ease;
+}
+
+.lightbox-overlay.zoomed .lightbox-img {
+  max-width: min(95vw, 1400px);
+  max-height: 95vh;
+  cursor: zoom-out;
 }
 
 /* Other projects grid */
