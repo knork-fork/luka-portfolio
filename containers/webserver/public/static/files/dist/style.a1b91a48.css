@@ -41,16 +41,10 @@ body {
 /* --- Navigation --- */
 
 .navbar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 100;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   padding: 1.25rem 2rem;
-  background: var(--color-bg);
 }
 
 .navbar-links {
@@ -84,7 +78,7 @@ body {
   width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 7rem 1.5rem 4rem;
+  padding: 2rem 1.5rem 4rem;
 }
 
 /* --- Typography --- */
@@ -101,7 +95,7 @@ h2 {
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--color-text-tertiary);
+  color: var(--color-text-secondary);
   margin-bottom: 1rem;
 }
 
@@ -546,6 +540,170 @@ a:hover {
   line-height: 1.6;
 }
 
+/* --- About page --- */
+
+.about-hero {
+  margin-bottom: 3.5rem;
+}
+
+.about-hero h1 {
+  margin-bottom: 1.5rem;
+}
+
+.about-hero-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.about-photo {
+  width: 190px;
+  height: 190px;
+  background: url("/static/images/me.jpeg") center / cover no-repeat;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.about-intro {
+  max-width: 700px;
+}
+
+.about-intro p {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.75;
+  margin-bottom: 0.75rem;
+}
+
+.about-intro p:last-child {
+  margin-bottom: 0;
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.about-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
+
+.about-section h2 {
+  margin-bottom: 0.75rem;
+}
+
+.about-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.about-list li {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  padding-left: 0.9rem;
+  position: relative;
+}
+
+.about-list li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--color-text-tertiary);
+}
+
+.about-edu {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.about-edu-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.about-edu-item strong {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.about-edu-item span {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.about-edu-year {
+  font-size: 0.75rem !important;
+  color: var(--color-text-tertiary) !important;
+}
+
+.about-experience {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1.75rem;
+}
+
+.about-role-header {
+  margin-bottom: 1rem;
+}
+
+.about-role-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 0.2rem;
+}
+
+.about-role-title {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.about-role-meta {
+  font-size: 0.8rem;
+  color: var(--color-text-tertiary);
+}
+
+.about-role-summary {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+}
+
+.about-role-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.about-role-list li {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  padding-left: 0.9rem;
+  position: relative;
+}
+
+.about-role-list li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--color-text-tertiary);
+}
+
 /* --- Projects page: wider desktop layout --- */
 
 @media (min-width: 1100px) {
@@ -558,6 +716,31 @@ a:hover {
   }
 }
 
+/* --- About page: desktop layout --- */
+
+@media (min-width: 768px) {
+  .about-hero-row {
+    flex-direction: row;
+    align-items: center;
+    gap: 2.75rem;
+  }
+
+  .about-content {
+    flex-direction: row;
+    gap: 2.5rem;
+  }
+
+  .about-sidebar {
+    width: 38%;
+    flex-shrink: 0;
+  }
+
+  .about-main {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
 /* --- Responsive --- */
 
 @media (max-width: 600px) {
@@ -567,10 +750,6 @@ a:hover {
 
   .navbar-links {
     gap: 1.25rem;
-  }
-
-  .page {
-    padding-top: 5rem;
   }
 
   h1 {
@@ -588,5 +767,14 @@ a:hover {
 
   .other-grid {
     grid-template-columns: 1fr;
+  }
+
+  .about-photo {
+    width: 200px;
+    height: 200px;
+  }
+
+  .about-experience {
+    padding: 1.25rem 1.25rem;
   }
 }

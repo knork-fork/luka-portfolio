@@ -11,7 +11,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
   <link rel="icon" type="image/x-icon" href="/static/favicon/favicon.ico">
-  <link rel="stylesheet" href="/static/dist/style.5a25901c.css" data-build="style.css">
+  <link rel="stylesheet" href="/static/dist/style.a1b91a48.css" data-build="style.css">
 </head>
 <body>
 
@@ -24,11 +24,98 @@
     </ul>
   </nav>
 
-  <main class="page" style="display: flex; align-items: center; justify-content: center; flex: 1;">
-    <section style="text-align: center;">
-      <h1 style="font-size: 3rem; margin-bottom: 0.5rem;">Under Construction</h1>
-      <p style="color: var(--text-secondary, #888); font-size: 1.125rem;">About section is coming soon. Stay tuned!</p>
+  <main class="page page-about">
+
+    <!-- Hero -->
+    <section class="about-hero">
+      <h1>About</h1>
+      <div class="about-hero-row">
+        <div class="about-photo" aria-label="Photo placeholder"></div>
+        <div class="about-intro">
+          <p>
+            I'm a backend engineer with 8 years of experience building and maintaining production systems.
+          </p>
+          <p>
+            My work focuses on APIs, asynchronous processing, and the parts of systems that move data and keep things running, including background jobs and service integrations.
+          </p>
+          <p>
+            Most of that experience comes from working on large, long-running codebases: maintaining existing services, adding new functionality, and dealing with the technical debt that naturally accumulates in systems that have been in production for years.
+          </p>
+        </div>
+      </div>
     </section>
+
+    <!-- Main two-column content -->
+    <section class="about-content">
+
+      <!-- Left column -->
+      <div class="about-sidebar">
+
+        <div class="about-section">
+          <h2>Core Strengths</h2>
+          <ul class="about-list">
+            <li>Backend systems and API design</li>
+            <li>Asynchronous processing and background workers</li>
+            <li>Containerized services and deployment infrastructure</li>
+            <li>Real-time data ingestion and processing</li>
+            <li>Working with large, long-lived codebases</li>
+          </ul>
+        </div>
+
+        <div class="about-section">
+          <h2>Education</h2>
+          <div class="about-edu">
+            <div class="about-edu-item">
+              <strong>Bachelor's Degree — Computer Science</strong>
+              <span>Zagreb University of Applied Sciences</span>
+              <span class="about-edu-year">2017–2021</span>
+            </div>
+            <div class="about-edu-item">
+              <strong>Computer Software Technician</strong>
+              <span>Tehnička škola Sisak</span>
+              <span class="about-edu-year">2013–2017</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-section">
+          <h2>Engineering Interests</h2>
+          <ul class="about-list">
+            <li>Distributed processing systems</li>
+            <li>Queue-driven architectures</li>
+            <li>Data retrieval and indexing systems</li>
+            <li>Reverse engineering and systems exploration</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Right column -->
+      <div class="about-main">
+
+        <div class="about-section about-experience">
+          <h2>Experience</h2>
+          <div class="about-role-header">
+            <h3>GIS Cloud</h3>
+            <span class="about-role-title">Backend Developer</span>
+            <span class="about-role-meta">Jul 2018 – Present</span>
+          </div>
+          <p class="about-role-summary">
+            Developing backend services and APIs for a production SaaS platform, working across core APIs, integrations, and internal systems that support daily operations.
+          </p>
+          <ul class="about-role-list">
+            <li>Migrated a large legacy PHP codebase from PHP 5.5 to PHP 8.2 while maintaining a live production system.</li>
+            <li>Designed and maintained API-driven backend systems used by internal tools and external integrations</li>
+            <li>Introduced asynchronous workflows and background job processing for tasks unsuitable for request cycles</li>
+            <li>Planned and implemented backend features including technical specs, task breakdowns, and coordination with product and frontend teams</li>
+            <li>Worked on performance and reliability of PostgreSQL-backed systems including query tuning and schema changes</li>
+            <li>Integrated external geospatial data sources (WFS/WMS) including protocol handling and data normalization</li>
+          </ul>
+        </div>
+      </div>
+
+    </section>
+
   </main>
 
   <footer class="footer">
