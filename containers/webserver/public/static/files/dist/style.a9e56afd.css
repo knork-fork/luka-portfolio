@@ -560,9 +560,11 @@ a:hover {
 .about-photo {
   width: 190px;
   height: 190px;
-  background: url("/static/images/me.jpeg") center / cover no-repeat;
+  background: url("/static/images/me_2023.jpeg") center / cover no-repeat;
   border-radius: 6px;
   flex-shrink: 0;
+  border: 1px solid #d0d0d0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .about-intro {
