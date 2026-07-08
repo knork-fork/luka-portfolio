@@ -37,107 +37,11 @@
     </ul>
   </nav>
 
-<main class="page blog-index">
-  <section class="blog-hero">
-    <h1>Blog</h1>
-    <p class="blog-subtitle">Notes and write-ups on backend systems, software architecture, and engineering experiments.</p>
-  </section>
-  <section class="blog-controls">
-    <div class="blog-controls-row">
-      <input class="blog-search" type="search" placeholder="Search posts..." aria-label="Search posts" autocomplete="off">
-      <div class="blog-tags-menu">
-        <button class="blog-tags-toggle" type="button" aria-haspopup="true" aria-expanded="false">Tags</button>
-        <div class="blog-tags-popover" hidden>
-          <button class="blog-tags-clear" type="button">Clear filters</button>
-          <div class="blog-filter" role="group" aria-label="Filter posts by tag">
-            <button class="blog-filter-chip" type="button" data-tag="cli" aria-pressed="false">CLI</button>
-            <button class="blog-filter-chip" type="button" data-tag="css" aria-pressed="false">CSS</button>
-            <button class="blog-filter-chip" type="button" data-tag="career" aria-pressed="false">Career</button>
-            <button class="blog-filter-chip" type="button" data-tag="components" aria-pressed="false">Components</button>
-            <button class="blog-filter-chip" type="button" data-tag="databases" aria-pressed="false">Databases</button>
-            <button class="blog-filter-chip" type="button" data-tag="design" aria-pressed="false">Design</button>
-            <button class="blog-filter-chip" type="button" data-tag="devops" aria-pressed="false">DevOps</button>
-            <button class="blog-filter-chip" type="button" data-tag="docker" aria-pressed="false">Docker</button>
-            <button class="blog-filter-chip" type="button" data-tag="frontend" aria-pressed="false">Frontend</button>
-            <button class="blog-filter-chip" type="button" data-tag="performance" aria-pressed="false">Performance</button>
-            <button class="blog-filter-chip" type="button" data-tag="portfolio" aria-pressed="false">Portfolio</button>
-            <button class="blog-filter-chip" type="button" data-tag="quality" aria-pressed="false">Quality</button>
-            <button class="blog-filter-chip" type="button" data-tag="sql" aria-pressed="false">SQL</button>
-            <button class="blog-filter-chip" type="button" data-tag="security" aria-pressed="false">Security</button>
-            <button class="blog-filter-chip" type="button" data-tag="testing" aria-pressed="false">Testing</button>
-            <button class="blog-filter-chip" type="button" data-tag="tooling" aria-pressed="false">Tooling</button>
-            <button class="blog-filter-chip" type="button" data-tag="web" aria-pressed="false">Web</button>          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="blog-featured">
-    <h2>Featured</h2>
-<a class="blog-card blog-card-grad-4 blog-card-featured" href="/blog/blog-1" data-tags="portfolio web">
-  <ul class="blog-card-tags">
-    <li class="blog-card-tag">Portfolio</li>
-    <li class="blog-card-tag">Web</li>
-  </ul>
-  <span class="blog-card-extra">Bloggy blog</span>
-  <h3 class="blog-card-title">Personal portfolio blog</h3>
-  <span class="blog-card-subtitle">Personal portfolio page with a blog and featured projects.</span>
-</a>
-  </section>
-  <div class="blog-grid">
-<a class="blog-card blog-card-grad-5" href="/blog/blog-12" data-tags="">
-  
-  <span class="blog-card-extra">Side projects</span>
-  <h3 class="blog-card-title">Shipping a weekend project without burning out</h3>
-  <span class="blog-card-subtitle">Scoping ruthlessly so the fun does not turn into a chore.</span>
-</a>
-<a class="blog-card blog-card-grad-2" href="/blog/blog-11" data-tags="security">
-  <ul class="blog-card-tags">
-    <li class="blog-card-tag">Security</li>
-  </ul>
-  <span class="blog-card-extra">Security</span>
-  <h3 class="blog-card-title">Threat modelling for small projects</h3>
-  <span class="blog-card-subtitle">You do not need a big team to think about attackers.</span>
-</a>
-<a class="blog-card blog-card-grad-1" href="/blog/blog-10" data-tags="databases sql">
-  <ul class="blog-card-tags">
-    <li class="blog-card-tag">Databases</li>
-    <li class="blog-card-tag">SQL</li>
-  </ul>
-  <span class="blog-card-extra">Databases</span>
-  <h3 class="blog-card-title">Indexing for people in a hurry</h3>
-  <span class="blog-card-subtitle">A gentle mental model for when an index actually helps.</span>
-</a>
-<a class="blog-card blog-card-grad-1" href="/blog/blog-9" data-tags="css frontend">
-  <ul class="blog-card-tags">
-    <li class="blog-card-tag">CSS</li>
-    <li class="blog-card-tag">Frontend</li>
-  </ul>
-  <span class="blog-card-extra">Frontend</span>
-  <h3 class="blog-card-title">Rethinking how I use CSS grid</h3>
-  <span class="blog-card-subtitle">Layouts got simpler once I stopped fighting the spec.</span>
-</a>
-<a class="blog-card blog-card-grad-4" href="/blog/blog-8" data-tags="testing quality">
-  <ul class="blog-card-tags">
-    <li class="blog-card-tag">Testing</li>
-    <li class="blog-card-tag">Quality</li>
-  </ul>
-  <span class="blog-card-extra">Testing</span>
-  <h3 class="blog-card-title">Writing tests I actually trust</h3>
-  <span class="blog-card-subtitle">Moving past coverage numbers toward meaningful assertions.</span>
-</a>
-<a class="blog-card blog-card-grad-3" href="/blog/blog-7" data-tags="career">
-  <ul class="blog-card-tags">
-    <li class="blog-card-tag">Career</li>
-  </ul>
-  <span class="blog-card-extra">Career</span>
-  <h3 class="blog-card-title">Notes from my first year as a developer</h3>
-  <span class="blog-card-subtitle">What I wish I had known before writing production code.</span>
-</a>
-
-  </div>
-  <p class="blog-empty" hidden>No posts match your filters.</p>
-  <nav class="blog-pagination" aria-label="Blog pages" hidden></nav>
-  <script type="application/json" id="blog-index-data">[{"name":"blog-12","title":"Shipping a weekend project without burning out","header":"Side projects","subtitle":"Scoping ruthlessly so the fun does not turn into a chore.","tags":[],"topic":null,"gradient":"blog-card-grad-5","is_featured":false},{"name":"blog-11","title":"Threat modelling for small projects","header":"Security","subtitle":"You do not need a big team to think about attackers.","tags":["Security"],"topic":null,"gradient":"blog-card-grad-2","is_featured":false},{"name":"blog-10","title":"Indexing for people in a hurry","header":"Databases","subtitle":"A gentle mental model for when an index actually helps.","tags":["Databases","SQL"],"topic":null,"gradient":"blog-card-grad-1","is_featured":false},{"name":"blog-9","title":"Rethinking how I use CSS grid","header":"Frontend","subtitle":"Layouts got simpler once I stopped fighting the spec.","tags":["CSS","Frontend"],"topic":null,"gradient":"blog-card-grad-1","is_featured":false},{"name":"blog-8","title":"Writing tests I actually trust","header":"Testing","subtitle":"Moving past coverage numbers toward meaningful assertions.","tags":["Testing","Quality"],"topic":null,"gradient":"blog-card-grad-4","is_featured":false},{"name":"blog-7","title":"Notes from my first year as a developer","header":"Career","subtitle":"What I wish I had known before writing production code.","tags":["Career"],"topic":null,"gradient":"blog-card-grad-3","is_featured":false},{"name":"blog-6","title":"My favourite command line tools","header":"Tooling","subtitle":"The small utilities that quietly make every day faster.","tags":["CLI","Tooling"],"topic":null,"gradient":"blog-card-grad-1","is_featured":false},{"name":"blog-5","title":"Shaving milliseconds off page loads","header":"Performance","subtitle":"Practical wins from lazy loading and smaller bundles.","tags":["Performance","Web"],"topic":null,"gradient":"blog-card-grad-4","is_featured":false},{"name":"blog-4","title":"Why I switched to containers","header":"Backend bits","subtitle":"A short story about reproducible builds and fewer surprises.","tags":["Docker","DevOps"],"topic":null,"gradient":"blog-card-grad-5","is_featured":false},{"name":"blog-3","title":"Building a design system from scratch","header":"Design notes","subtitle":"Lessons learned setting up tokens, components and documentation.","tags":["Design","CSS","Components"],"topic":null,"gradient":"blog-card-grad-0","is_featured":false},{"name":"blog-2","title":"Another personal portfolio blog","header":"Bloggy blog","subtitle":"Second blog post","tags":["Portfolio"],"topic":null,"gradient":"blog-card-grad-0","is_featured":false},{"name":"blog-1","title":"Personal portfolio blog","header":"Bloggy blog","subtitle":"Personal portfolio page with a blog and featured projects.","tags":["Portfolio","Web"],"topic":null,"gradient":"blog-card-grad-4","is_featured":true}]</script>
+<main class="page" style="display: flex; align-items: center; justify-content: center; flex: 1;">
+<section style="text-align: center;">
+    <h1 style="font-size: 3rem; margin-bottom: 0.5rem;">No Blogs Yet</h1>
+    <p style="color: var(--color-text-secondary, #888); font-size: 1.125rem;">There are no blog posts to show right now. Check back soon!</p>
+</section>
 </main>
 
   <footer class="footer">
