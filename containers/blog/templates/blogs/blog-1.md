@@ -1,3 +1,13 @@
+### metadata
+header: Bloggy blog
+title: Personal portfolio blog
+subtitle: Personal portfolio page with a blog and featured projects.
+is_featured: true
+tags: []
+topic: null
+thumbnail: null
+embed_text: null
+### metadata
 # luka-portfolio
 Personal portfolio page with a blog and featured projects.
 
