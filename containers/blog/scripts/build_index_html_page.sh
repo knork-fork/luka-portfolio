@@ -15,8 +15,10 @@ CONTROLS_TEMPLATE="$BLOG_DIR/templates/components/blog_controls.html"
 CHIP_TEMPLATE="$BLOG_DIR/templates/components/blog_filter_chip.html"
 OUTPUT="$BLOG_DIR/static/pages/index.html"
 
-GRADIENT_COUNT=6
-VISIBLE_COUNT=6
+# Only the first PREBAKE_COUNT cards are rendered into the static page (SEO /
+# no-JS). blog.js reads the full list from the embedded #blog-index-data block
+# and builds the remaining cards when filtering/paginating.
+PREBAKE_COUNT=6
 
 if ! "$SCRIPT_DIR/validate_index.sh"; then
     echo "Error: index validation failed." >&2
@@ -25,12 +27,6 @@ fi
 
 html_escape() {
     jq -rn --arg s "$1" '$s | @html'
-}
-
-pick_gradient_class() {
-    local key="$1" sum
-    sum=$(printf '%s' "$key" | cksum | cut -d' ' -f1)
-    printf 'blog-card-grad-%s' "$((sum % GRADIENT_COUNT))"
 }
 
 # Render a card's tags (a JSON array) via the tag components; nothing when empty
@@ -84,11 +80,8 @@ render() {
 }
 
 emit_card() {
-    local name="$1" title="$2" topic="$3" header="$4" subtitle="$5" extra_class="$6" tags="${7:-[]}"
-    local key grad card_class
-    key="${topic:-$title}"
-    grad="$(pick_gradient_class "$key")"
-    card_class="blog-card $grad"
+    local name="$1" title="$2" grad="$3" header="$4" subtitle="$5" extra_class="$6" tags="${7:-[]}"
+    local card_class="blog-card $grad"
     [ -n "$extra_class" ] && card_class="$card_class $extra_class"
     # Straight ASCII apostrophe renders as a vertical tick; use the typographic one
     title="${title//\'/’}"
@@ -114,31 +107,37 @@ trap 'rm -f "$CONTENT_FILE"' EXIT
     if [ -n "$featured" ]; then
         f_name="$(printf '%s' "$featured" | jq -r '.name')"
         f_title="$(printf '%s' "$featured" | jq -r '.title')"
-        f_topic="$(printf '%s' "$featured" | jq -r '.topic // ""')"
+        f_grad="$(printf '%s' "$featured" | jq -r '.gradient')"
         f_header="$(printf '%s' "$featured" | jq -r '.header // ""')"
         f_subtitle="$(printf '%s' "$featured" | jq -r '.subtitle // ""')"
         f_tags="$(printf '%s' "$featured" | jq -c '.tags // []')"
-        render "$FEATURED_TEMPLATE" FEATURED_CARD "$(emit_card "$f_name" "$f_title" "$f_topic" "$f_header" "$f_subtitle" "blog-card-featured" "$f_tags")"
+        render "$FEATURED_TEMPLATE" FEATURED_CARD "$(emit_card "$f_name" "$f_title" "$f_grad" "$f_header" "$f_subtitle" "blog-card-featured" "$f_tags")"
     fi
 
+    # Pre-render only the first PREBAKE_COUNT cards (newest first); blog.js builds
+    # the rest from the embedded data block below.
     cards=""
     i=0
     while IFS= read -r entry; do
+        [ "$i" -ge "$PREBAKE_COUNT" ] && break
         name="$(printf '%s' "$entry" | jq -r '.name')"
         title="$(printf '%s' "$entry" | jq -r '.title')"
-        topic="$(printf '%s' "$entry" | jq -r '.topic // ""')"
+        grad="$(printf '%s' "$entry" | jq -r '.gradient')"
         header="$(printf '%s' "$entry" | jq -r '.header // ""')"
         subtitle="$(printf '%s' "$entry" | jq -r '.subtitle // ""')"
         tags="$(printf '%s' "$entry" | jq -c '.tags // []')"
-        extra_class=""
-        [ "$i" -ge "$VISIBLE_COUNT" ] && extra_class="blog-card-hidden"
-        cards+="$(emit_card "$name" "$title" "$topic" "$header" "$subtitle" "$extra_class" "$tags")"$'\n'
+        cards+="$(emit_card "$name" "$title" "$grad" "$header" "$subtitle" "" "$tags")"$'\n'
         i=$((i + 1))
     done < <(jq -c 'sort_by(.created) | reverse | .[]' "$INDEX")
 
-    # Cards beyond the first page start hidden (page 1 for no-JS); blog.js takes
-    # over visibility and renders the numbered pagination controls.
-    render "$GRID_TEMPLATE" GRID_CARDS "$cards"
+    # Full post list (newest first) embedded for blog.js: it hydrates the grid,
+    # filters, and paginates client-side. Escape "<" so the JSON can't terminate
+    # the <script> element early.
+    blog_index_data="$(jq -c 'sort_by(.created) | reverse
+        | [ .[] | {name, title, header, subtitle, tags, topic, gradient, is_featured} ]' "$INDEX")"
+    blog_index_data="${blog_index_data//</\\u003c}"
+
+    render "$GRID_TEMPLATE" GRID_CARDS "$cards" BLOG_INDEX_DATA "$blog_index_data"
 } > "$CONTENT_FILE"
 
 mkdir -p "$(dirname "$OUTPUT")"

@@ -1022,10 +1022,6 @@ a:hover {
   margin-top: 0.75rem;
 }
 
-.blog-card-hidden {
-  display: none;
-}
-
 /* Numbered pagination below the grid */
 .blog-pagination {
   display: flex;

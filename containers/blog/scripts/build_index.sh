@@ -6,6 +6,18 @@ BLOG_DIR="$SCRIPT_DIR/.."
 BLOGS_DIR="$BLOG_DIR/templates/blogs"
 INDEX="$BLOG_DIR/index.json"
 
+GRADIENT_COUNT=6
+
+# Deterministically pick one of GRADIENT_COUNT card gradients from a key, so the
+# same post always gets the same colour. Baked into index.json here (rather than
+# computed at page-build time) because the HTML page pre-renders only the first
+# few cards; blog.js builds the rest from index.json and needs the colour too.
+pick_gradient_class() {
+    local key="$1" sum
+    sum=$(printf '%s' "$key" | cksum | cut -d' ' -f1)
+    printf 'blog-card-grad-%s' "$((sum % GRADIENT_COUNT))"
+}
+
 # Dates come from git history, not the filesystem. Git preserves no
 # birth/mtime, so a clone, checkout, or regeneration resets those to "now" —
 # which both scrambles the post ordering and churns created/modified in
@@ -78,6 +90,11 @@ while IFS=$'\t' read -r created_epoch file; do
     created=$(date -d "@$created_epoch" --iso-8601=seconds)
     modified=$(date -d "@$(modified_epoch_of "$file")" --iso-8601=seconds)
 
+    # Gradient keyed on topic (falling back to title), matching how cards are coloured
+    grad_key="$title"
+    [ -n "$topic" ] && [ "$topic" != "null" ] && grad_key="$topic"
+    gradient=$(pick_gradient_class "$grad_key")
+
     entry=$(jq -n \
         --arg name "$name" \
         --arg title "$title" \
@@ -85,11 +102,12 @@ while IFS=$'\t' read -r created_epoch file; do
         --arg subtitle "$subtitle" \
         --arg created "$created" \
         --arg modified "$modified" \
+        --arg gradient "$gradient" \
         --argjson is_featured "$is_featured" \
         --argjson tags "$tags" \
         --argjson topic "$topic" \
         --argjson thumbnail "$thumbnail" \
-        '{name: $name, title: $title, created: $created, modified: $modified, tags: $tags, topic: $topic, thumbnail: $thumbnail, is_featured: $is_featured, header: $header, subtitle: $subtitle}')
+        '{name: $name, title: $title, created: $created, modified: $modified, tags: $tags, topic: $topic, thumbnail: $thumbnail, is_featured: $is_featured, header: $header, subtitle: $subtitle, gradient: $gradient}')
 
     entries=$(jq -n --argjson arr "$entries" --argjson entry "$entry" '$arr + [$entry]')
 done < <(
