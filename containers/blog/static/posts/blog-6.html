@@ -24,7 +24,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
   <link rel="icon" type="image/x-icon" href="/static/favicon/favicon.ico">
-  <link rel="stylesheet" href="/static/dist/style.c1f065d2.css" data-build="style.css">
+  <link rel="stylesheet" href="/static/dist/style.7b0e97e5.css" data-build="style.css">
 </head>
 <body>
 
@@ -37,8 +37,56 @@
     </ul>
   </nav>
 
-<main style="display:flex;align-items:center;justify-content:center;min-height:60vh;">
-  <p>blog-6.md</p>
+<main class="page post-content">
+<h1>My favourite command line tools</h1>
+<p>Most of my day happens in a terminal, so small ergonomic wins compound fast. These are
+the tools I would reinstall first on a fresh machine.</p>
+<h2>The shortlist</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Replaces</th>
+<th>Why I like it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rg</code></td>
+<td><code>grep</code></td>
+<td>fast, respects <code>.gitignore</code></td>
+</tr>
+<tr>
+<td><code>fd</code></td>
+<td><code>find</code></td>
+<td>sane defaults, readable syntax</td>
+</tr>
+<tr>
+<td><code>bat</code></td>
+<td><code>cat</code></td>
+<td>syntax highlighting + paging</td>
+</tr>
+<tr>
+<td><code>jq</code></td>
+<td>—</td>
+<td>slicing JSON without a script</td>
+</tr>
+</tbody>
+</table>
+<h2>In practice</h2>
+<p>A search-and-preview loop I run constantly:</p>
+<pre class="hljs"><code class="language-bash"><span class="hljs-comment"># every TODO left in tracked source, with context</span>
+rg -n <span class="hljs-string">&quot;TODO|FIXME&quot;</span> --glob <span class="hljs-string">&#x27;!vendor&#x27;</span> | bat --style=plain
+</code></pre>
+
+<p>Piping <code>fd</code> into a quick loop for bulk renames:</p>
+<pre class="hljs"><code class="language-bash">fd -e jpeg | <span class="hljs-keyword">while</span> <span class="hljs-built_in">read</span> -r f; <span class="hljs-keyword">do</span>
+  <span class="hljs-built_in">mv</span> -- <span class="hljs-string">&quot;<span class="hljs-variable">$f</span>&quot;</span> <span class="hljs-string">&quot;<span class="hljs-variable">${f%.jpeg}</span>.jpg&quot;</span>
+<span class="hljs-keyword">done</span>
+</code></pre>
+
+<p>None of these are essential. Together they save a few minutes an hour, which is a lot
+of minutes over a year.</p>
 </main>
 
   <footer class="footer">

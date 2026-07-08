@@ -24,7 +24,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
   <link rel="icon" type="image/x-icon" href="/static/favicon/favicon.ico">
-  <link rel="stylesheet" href="/static/dist/style.c1f065d2.css" data-build="style.css">
+  <link rel="stylesheet" href="/static/dist/style.7b0e97e5.css" data-build="style.css">
 </head>
 <body>
 
@@ -37,8 +37,52 @@
     </ul>
   </nav>
 
-<main style="display:flex;align-items:center;justify-content:center;min-height:60vh;">
-  <p>blog-2.md</p>
+<main class="page post-content">
+<h1>Serving the blog</h1>
+<p>The first post covered the build. This one is about <strong>serving</strong> the output — which,
+for a static site, is refreshingly little work.</p>
+<h2>One container per surface</h2>
+<p>Each surface is its own nginx container:</p>
+<table>
+<thead>
+<tr>
+<th>Container</th>
+<th>Purpose</th>
+<th>Port</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>webserver</code></td>
+<td>main site</td>
+<td>20242</td>
+</tr>
+<tr>
+<td><code>blog</code></td>
+<td>the blog you’re on</td>
+<td>20243</td>
+</tr>
+</tbody>
+</table>
+<h2>The nginx bit</h2>
+<p>Clean URLs (<code>/blog/my-post</code> instead of <code>/blog/my-post.html</code>) take one directive:</p>
+<pre class="hljs"><code class="language-nginx"><span class="hljs-section">location</span> /blog/ {
+    <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>.html <span class="hljs-variable">$uri</span>/ =<span class="hljs-number">404</span>;
+}
+</code></pre>
+
+<p>Wiring the container up is a few lines of compose:</p>
+<pre class="hljs"><code class="language-yaml"><span class="hljs-attr">blog:</span>
+  <span class="hljs-attr">image:</span> <span class="hljs-string">nginx:latest</span>
+  <span class="hljs-attr">volumes:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-string">&#x27;./containers/blog:/application&#x27;</span>
+  <span class="hljs-attr">ports:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;20243:80&quot;</span>
+</code></pre>
+
+<blockquote>
+<p>If your deploy needs a runbook, it is probably too complicated for a personal site.</p>
+</blockquote>
 </main>
 
   <footer class="footer">

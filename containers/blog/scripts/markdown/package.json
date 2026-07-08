@@ -1,0 +1,12 @@
+{
+  "name": "blog-markdown",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Bulk markdown-to-HTML converter for blog post bodies",
+  "dependencies": {
+    "highlight.js": "11.9.0",
+    "markdown-it": "14.1.0",
+    "markdown-it-task-lists": "2.1.1"
+  }
+}

@@ -24,7 +24,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
   <link rel="icon" type="image/x-icon" href="/static/favicon/favicon.ico">
-  <link rel="stylesheet" href="/static/dist/style.c1f065d2.css" data-build="style.css">
+  <link rel="stylesheet" href="/static/dist/style.7b0e97e5.css" data-build="style.css">
 </head>
 <body>
 
@@ -37,8 +37,27 @@
     </ul>
   </nav>
 
-<main style="display:flex;align-items:center;justify-content:center;min-height:60vh;">
-  <p>blog-7.md</p>
+<main class="page post-content">
+<h1>Notes from my first year as a developer</h1>
+<p>A year ago I could not have told you what a <em>merge conflict</em> was. Here are the things I
+wish someone had told me on day one.</p>
+<h2>Things that actually mattered</h2>
+<ol>
+<li><strong>Reading</strong> code is a bigger part of the job than writing it</li>
+<li>Small, frequent commits beat one heroic one</li>
+<li>Asking a “dumb” question early is cheaper than guessing for a day</li>
+</ol>
+<h2>The habit that helped most</h2>
+<p>Committing often, with messages my future self could read:</p>
+<pre class="hljs"><code class="language-bash">git add -p                 <span class="hljs-comment"># stage in small, reviewable chunks</span>
+git commit -m <span class="hljs-string">&quot;Fix off-by-one in pagination&quot;</span>
+</code></pre>
+
+<blockquote>
+<p>Nobody remembers the junior who asked too many questions. Everyone remembers the one
+who silently shipped a bug to production.</p>
+</blockquote>
+<p>Be kind to your future self. They are the one reading your git log at 2am.</p>
 </main>
 
   <footer class="footer">

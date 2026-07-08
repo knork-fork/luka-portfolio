@@ -24,7 +24,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
   <link rel="icon" type="image/x-icon" href="/static/favicon/favicon.ico">
-  <link rel="stylesheet" href="/static/dist/style.c1f065d2.css" data-build="style.css">
+  <link rel="stylesheet" href="/static/dist/style.7b0e97e5.css" data-build="style.css">
 </head>
 <body>
 
@@ -37,8 +37,52 @@
     </ul>
   </nav>
 
-<main style="display:flex;align-items:center;justify-content:center;min-height:60vh;">
-  <p>blog-10.md</p>
+<main class="page post-content">
+<h1>Indexing for people in a hurry</h1>
+<p>You do not need to understand B-trees to use indexes well. You need one mental model: an
+index is a <em>sorted lookup</em> the database keeps on the side so it can skip reading every row.</p>
+<h2>The query</h2>
+<pre class="hljs"><code class="language-sql"><span class="hljs-keyword">SELECT</span> id, email
+<span class="hljs-keyword">FROM</span> users
+<span class="hljs-keyword">WHERE</span> email <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;ada@example.com&#x27;</span>;
+</code></pre>
+
+<p>Without an index, the database reads the whole table:</p>
+<pre class="hljs"><code>Seq Scan on users  (cost=0.00..1834.00 rows=1 width=36)
+  Filter: (email = 'ada@example.com')
+</code></pre>
+
+<p>Add the index and it jumps straight to the row:</p>
+<pre class="hljs"><code class="language-sql"><span class="hljs-keyword">CREATE</span> INDEX idx_users_email <span class="hljs-keyword">ON</span> users (email);
+</code></pre>
+
+<pre class="hljs"><code>Index Scan using idx_users_email on users  (cost=0.29..8.31 rows=1 width=36)
+</code></pre>
+
+<h2>Rules of thumb</h2>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Index helps?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Column in a <code>WHERE</code> / <code>JOIN</code></td>
+<td>Usually yes</td>
+</tr>
+<tr>
+<td>Tiny table (a few hundred rows)</td>
+<td>Rarely</td>
+</tr>
+<tr>
+<td>Column you write far more than read</td>
+<td>Often not</td>
+</tr>
+</tbody>
+</table>
+<p>Index the columns you <em>filter</em> on, measure with <code>EXPLAIN</code>, and resist indexing everything.</p>
 </main>
 
   <footer class="footer">

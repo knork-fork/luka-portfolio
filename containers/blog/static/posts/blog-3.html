@@ -24,7 +24,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
   <link rel="icon" type="image/x-icon" href="/static/favicon/favicon.ico">
-  <link rel="stylesheet" href="/static/dist/style.c1f065d2.css" data-build="style.css">
+  <link rel="stylesheet" href="/static/dist/style.7b0e97e5.css" data-build="style.css">
 </head>
 <body>
 
@@ -37,8 +37,57 @@
     </ul>
   </nav>
 
-<main style="display:flex;align-items:center;justify-content:center;min-height:60vh;">
-  <p>blog-3.md</p>
+<main class="page post-content">
+<h1>Building a design system from scratch</h1>
+<p>A design system for a one-person project sounds like overkill. It isn’t. Even a <em>tiny</em>
+set of tokens keeps every page feeling like the same website.</p>
+<h2>Start with tokens, not components</h2>
+<p>Colours, spacing and type live in one place as CSS custom properties:</p>
+<pre class="hljs"><code class="language-css"><span class="hljs-selector-pseudo">:root</span> {
+  <span class="hljs-attr">--color-bg</span>: <span class="hljs-number">#fafaf9</span>;
+  <span class="hljs-attr">--color-text</span>: <span class="hljs-number">#1c1917</span>;
+  <span class="hljs-attr">--color-accent</span>: <span class="hljs-number">#2563eb</span>;
+  <span class="hljs-attr">--font-sans</span>: <span class="hljs-string">&quot;Inter&quot;</span>, system-ui, sans-serif;
+}
+</code></pre>
+
+<p>The same values can be exported as JSON for tooling:</p>
+<pre class="hljs"><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;color&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;bg&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;#fafaf9&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;text&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;#1c1917&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;accent&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;#2563eb&quot;</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;font&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;sans&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Inter, system-ui, sans-serif&quot;</span> <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+
+<h2>A quick token reference</h2>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--color-accent</code></td>
+<td><code>#2563eb</code></td>
+<td>links, active state</td>
+</tr>
+<tr>
+<td><code>--color-border</code></td>
+<td><code>#e7e5e4</code></td>
+<td>hairlines, cards</td>
+</tr>
+</tbody>
+</table>
+<h2>Where I am</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox"> Colour + type tokens</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox"> Buttons and links</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> Form controls</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> Dark theme</li>
+</ul>
+<p>Ship the tokens first; the components fall out of them.</p>
 </main>
 
   <footer class="footer">

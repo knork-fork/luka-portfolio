@@ -1,0 +1,2 @@
+# Transient scratch dir used by convert_markdown_to_html.sh (removed on exit)
+scripts/.mdwork.*

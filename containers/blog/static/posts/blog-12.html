@@ -24,7 +24,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
   <link rel="icon" type="image/x-icon" href="/static/favicon/favicon.ico">
-  <link rel="stylesheet" href="/static/dist/style.c1f065d2.css" data-build="style.css">
+  <link rel="stylesheet" href="/static/dist/style.7b0e97e5.css" data-build="style.css">
 </head>
 <body>
 
@@ -37,8 +37,36 @@
     </ul>
   </nav>
 
-<main style="display:flex;align-items:center;justify-content:center;min-height:60vh;">
-  <p>blog-12.md</p>
+<main class="page post-content">
+<h1>Shipping a weekend project without burning out</h1>
+<p>I have a graveyard of half-finished side projects. The ones I actually <em>finished</em> have
+one thing in common: I scoped them until they were almost embarrassingly small.</p>
+<h2>Cut the scope, then cut it again</h2>
+<p>Write the version-one feature list, then delete half of it:</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox"> One thing the app does well</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox"> The plainest possible UI</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> Accounts and login</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> A settings page</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> The clever feature that made you excited</li>
+</ul>
+<p>Those unchecked items are v2 — <em>if there is a v2</em>.</p>
+<h2>Keep the setup trivial</h2>
+<p>A <code>package.json</code> a future-you can run without thinking:</p>
+<pre class="hljs"><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;dev&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;vite&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;build&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;vite build&quot;</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+
+<pre class="hljs"><code class="language-bash">npm install &amp;&amp; npm run dev
+</code></pre>
+
+<blockquote>
+<p>A finished project you are slightly bored of beats a perfect one you never shipped.</p>
+</blockquote>
 </main>
 
   <footer class="footer">

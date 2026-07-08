@@ -1156,4 +1156,254 @@ a:hover {
   .about-experience {
     padding: 1.25rem 1.25rem;
   }
+
+  .post-content h1 {
+    font-size: 1.9rem;
+  }
+}
+
+/* --- Blog post body (rendered markdown) --- */
+
+.post-content {
+  font-size: 1rem;
+}
+
+.post-content > *:first-child {
+  margin-top: 0;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+  color: var(--color-text);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin: 2.5rem 0 1rem;
+  text-transform: none; /* undo the global uppercase-label h2 */
+}
+
+.post-content h1 {
+  font-size: 2.4rem;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0 0 1.5rem;
+}
+
+.post-content h2 {
+  font-size: 1.7rem;
+}
+
+.post-content h3 {
+  font-size: 1.3rem;
+}
+
+.post-content h4 {
+  font-size: 1.1rem;
+}
+
+.post-content p,
+.post-content li {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+}
+
+.post-content p {
+  margin: 0 0 1.25rem;
+}
+
+.post-content a {
+  color: var(--color-accent);
+}
+
+.post-content a:hover {
+  color: var(--color-accent-hover);
+}
+
+.post-content strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.post-content ul,
+.post-content ol {
+  margin: 0 0 1.25rem;
+  padding-left: 1.5rem; /* restore markers zeroed by the global reset */
+}
+
+.post-content li {
+  margin: 0.35rem 0;
+}
+
+.post-content li::marker {
+  color: var(--color-text-tertiary);
+}
+
+/* GFM task lists (markdown-it-task-lists) */
+.post-content ul.contains-task-list {
+  padding-left: 0.25rem;
+}
+
+.post-content .task-list-item {
+  list-style: none;
+}
+
+.post-content .task-list-item-checkbox {
+  margin-right: 0.5rem;
+}
+
+.post-content blockquote {
+  margin: 0 0 1.25rem;
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  border-left: 3px solid var(--color-border);
+  color: var(--color-text-tertiary);
+}
+
+.post-content hr {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  margin: 2.5rem 0;
+}
+
+.post-content code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0.15em 0.35em;
+}
+
+.post-content pre {
+  margin: 0 0 1.5rem;
+  padding: 1rem 1.25rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow-x: auto;
+  line-height: 1.5;
+}
+
+.post-content pre code {
+  font-size: 0.85rem;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+}
+
+.post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 1.5rem;
+  font-size: 0.9rem;
+}
+
+.post-content th,
+.post-content td {
+  border: 1px solid var(--color-border);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.post-content th {
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.post-content td {
+  color: var(--color-text-secondary);
+}
+
+.post-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* --- Syntax highlighting (highlight.js, GitHub-light palette) --- */
+
+.post-content .hljs {
+  color: var(--color-text);
+}
+
+.post-content .hljs-comment,
+.post-content .hljs-quote {
+  color: #6a737d;
+  font-style: italic;
+}
+
+.post-content .hljs-keyword,
+.post-content .hljs-selector-tag,
+.post-content .hljs-subst {
+  color: #d73a49;
+}
+
+.post-content .hljs-number,
+.post-content .hljs-literal,
+.post-content .hljs-variable,
+.post-content .hljs-template-variable,
+.post-content .hljs-tag .hljs-attr {
+  color: #005cc5;
+}
+
+.post-content .hljs-string,
+.post-content .hljs-doctag {
+  color: #032f62;
+}
+
+.post-content .hljs-title,
+.post-content .hljs-section,
+.post-content .hljs-selector-id {
+  color: #6f42c1;
+  font-weight: 600;
+}
+
+.post-content .hljs-type,
+.post-content .hljs-class .hljs-title {
+  color: #445588;
+  font-weight: 600;
+}
+
+.post-content .hljs-tag,
+.post-content .hljs-name,
+.post-content .hljs-attribute {
+  color: #22863a;
+}
+
+.post-content .hljs-regexp,
+.post-content .hljs-link {
+  color: #009926;
+}
+
+.post-content .hljs-symbol,
+.post-content .hljs-bullet {
+  color: #990073;
+}
+
+.post-content .hljs-built_in,
+.post-content .hljs-builtin-name {
+  color: #0086b3;
+}
+
+.post-content .hljs-meta {
+  color: #a8a29e;
+  font-weight: 600;
+}
+
+.post-content .hljs-deletion {
+  background: #ffeef0;
+}
+
+.post-content .hljs-addition {
+  background: #f0fff4;
+}
+
+.post-content .hljs-emphasis {
+  font-style: italic;
+}
+
+.post-content .hljs-strong {
+  font-weight: 600;
 }

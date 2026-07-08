@@ -24,7 +24,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
   <link rel="icon" type="image/x-icon" href="/static/favicon/favicon.ico">
-  <link rel="stylesheet" href="/static/dist/style.c1f065d2.css" data-build="style.css">
+  <link rel="stylesheet" href="/static/dist/style.7b0e97e5.css" data-build="style.css">
 </head>
 <body>
 
@@ -37,8 +37,47 @@
     </ul>
   </nav>
 
-<main style="display:flex;align-items:center;justify-content:center;min-height:60vh;">
-  <p>blog-5.md</p>
+<main class="page post-content">
+<h1>Shaving milliseconds off page loads</h1>
+<p>Performance work is unglamorous and <em>addictive</em>. You chase a 200ms win, ship it, and
+immediately go looking for the next one.</p>
+<h2>Measure first</h2>
+<p>Before touching anything, grab real numbers:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LCP</td>
+<td>2.9s</td>
+<td>1.4s</td>
+</tr>
+<tr>
+<td>JS sent</td>
+<td>480 KB</td>
+<td>120 KB</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>Load what you need, when you need it</h2>
+<p>Deferring off-screen images is almost free:</p>
+<pre class="hljs"><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/hero.avif&quot;</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">&quot;&quot;</span> <span class="hljs-attr">loading</span>=<span class="hljs-string">&quot;lazy&quot;</span> <span class="hljs-attr">decoding</span>=<span class="hljs-string">&quot;async&quot;</span>&gt;</span>
+</code></pre>
+
+<p>And code-split the parts most visitors never reach:</p>
+<pre class="hljs"><code class="language-js">button.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;click&quot;</span>, <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">const</span> { openEditor } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&quot;./editor.js&quot;</span>);
+  <span class="hljs-title function_">openEditor</span>();
+});
+</code></pre>
+
+<p>The fastest code is the code you never send.</p>
 </main>
 
   <footer class="footer">

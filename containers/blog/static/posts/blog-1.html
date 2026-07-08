@@ -24,7 +24,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
   <link rel="icon" type="image/x-icon" href="/static/favicon/favicon.ico">
-  <link rel="stylesheet" href="/static/dist/style.c1f065d2.css" data-build="style.css">
+  <link rel="stylesheet" href="/static/dist/style.7b0e97e5.css" data-build="style.css">
 </head>
 <body>
 
@@ -37,8 +37,38 @@
     </ul>
   </nav>
 
-<main style="display:flex;align-items:center;justify-content:center;min-height:60vh;">
-  <p>blog-1.md</p>
+<main class="page post-content">
+<h1>Building my portfolio blog</h1>
+<p>This site is intentionally boring: <strong>static HTML</strong>, a pinch of CSS, and a handful of
+shell scripts. No framework, no database, no build server. Here is how the pieces fit
+together.</p>
+<h2>The moving parts</h2>
+<ul>
+<li><strong>Templates</strong> — hand-written HTML components in <code>templates/</code></li>
+<li><strong>Posts</strong> — plain markdown files, one per entry
+<ul>
+<li>metadata lives in a <code>### metadata</code> block at the top</li>
+<li>everything below it is the body you are reading now</li>
+</ul>
+</li>
+<li><strong>Scripts</strong> — glue that stitches templates and posts into pages</li>
+</ul>
+<h2>The build</h2>
+<p>Writing a post is just dropping a markdown file and running one script:</p>
+<pre class="hljs"><code class="language-bash"><span class="hljs-comment"># render every post + rebuild the index and sitemap</span>
+containers/blog/scripts/compose_posts.sh
+</code></pre>
+
+<p>Each post is wrapped in the shared layout with a tiny <code>&lt;main&gt;</code> swap:</p>
+<pre class="hljs"><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">main</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;page post-content&quot;</span>&gt;</span>
+  <span class="hljs-comment">&lt;!-- rendered markdown goes here --&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">main</span>&gt;</span>
+</code></pre>
+
+<p>That is the whole trick. The full source lives on <a href="https://github.com/knork-fork">GitHub</a>.</p>
+<blockquote>
+<p>Simple tools you understand beat clever tools you don’t.</p>
+</blockquote>
 </main>
 
   <footer class="footer">

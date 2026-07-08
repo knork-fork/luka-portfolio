@@ -24,7 +24,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
   <link rel="icon" type="image/x-icon" href="/static/favicon/favicon.ico">
-  <link rel="stylesheet" href="/static/dist/style.c1f065d2.css" data-build="style.css">
+  <link rel="stylesheet" href="/static/dist/style.7b0e97e5.css" data-build="style.css">
 </head>
 <body>
 
@@ -37,8 +37,58 @@
     </ul>
   </nav>
 
-<main style="display:flex;align-items:center;justify-content:center;min-height:60vh;">
-  <p>blog-11.md</p>
+<main class="page post-content">
+<h1>Threat modelling for small projects</h1>
+<p>Threat modelling sounds like something that needs a war room and a whiteboard. For a
+small project it is really just one question asked honestly: <strong>what could go wrong here?</strong></p>
+<h2>A lightweight pass: STRIDE</h2>
+<table>
+<thead>
+<tr>
+<th>Threat</th>
+<th>Example on a small app</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S</strong>poofing</td>
+<td>Guessable session tokens</td>
+</tr>
+<tr>
+<td><strong>T</strong>ampering</td>
+<td>Editing a price in a form post</td>
+</tr>
+<tr>
+<td><strong>R</strong>epudiation</td>
+<td>No audit trail for admin actions</td>
+</tr>
+<tr>
+<td><strong>I</strong>nfo disclosure</td>
+<td>Stack traces leaking to users</td>
+</tr>
+<tr>
+<td><strong>D</strong>enial of service</td>
+<td>An unbounded search query</td>
+</tr>
+<tr>
+<td><strong>E</strong>levation of priv.</td>
+<td>A missing role check on a route</td>
+</tr>
+</tbody>
+</table>
+<h2>Fix the cheap ones first</h2>
+<p>Never trust input that came from a user. Escape on the way out:</p>
+<pre class="hljs"><code class="language-php"><span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;&lt;h1&gt;&#x27;</span> . <span class="hljs-title function_ invoke__">htmlspecialchars</span>(<span class="hljs-variable">$title</span>, ENT_QUOTES, <span class="hljs-string">&#x27;UTF-8&#x27;</span>) . <span class="hljs-string">&#x27;&lt;/h1&gt;&#x27;</span>;
+</code></pre>
+
+<p>And keep secrets out of the repo — grep your history before it bites you:</p>
+<pre class="hljs"><code class="language-bash">git <span class="hljs-built_in">log</span> -p | rg -i <span class="hljs-string">&#x27;api[_-]?key|secret|password&#x27;</span>
+</code></pre>
+
+<blockquote>
+<p>You will not stop a determined attacker with a weekend of effort. You <em>will</em> stop the
+boring, automated 90% — and for a small project that is most of the risk.</p>
+</blockquote>
 </main>
 
   <footer class="footer">

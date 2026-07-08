@@ -21,6 +21,16 @@ fi
 
 mkdir -p "$OUTPUT_DIR"
 
+# Docker image that renders markdown bodies to HTML in bulk (see scripts/markdown/).
+# Bump the tag whenever scripts/markdown/ changes to force a rebuild.
+MD_IMAGE="blog-markdown:1"
+
+# Scratch space shared with the renderer container: bodies in, HTML fragments out.
+# Kept inside the repo (under $HOME) because snap-confined Docker cannot bind-mount /tmp.
+WORK="$(mktemp -d "$SCRIPT_DIR/.mdwork.XXXXXX")"
+trap 'rm -rf "$WORK"' EXIT
+mkdir -p "$WORK/in" "$WORK/out"
+
 # Read a single key's value from a blog's "### metadata ... ### metadata" block
 meta_value() {
     local file="$1" key="$2"
@@ -53,6 +63,21 @@ apply() {
     page="${page//$token/$value}"
 }
 
+# Pass 1: strip each post's "### metadata" block, leaving just the body markdown.
+# Everything after the closing "### metadata" fence is the body; the fence line
+# itself is not emitted because seen is still 1 when the print rule runs for it.
+while IFS= read -r -d '' file; do
+    stem="$(basename "$file" .md)"
+    awk 'seen==2 { print } /^### metadata$/ { seen++ }' "$file" > "$WORK/in/$stem.md"
+done < <(find "$BLOGS_DIR" -maxdepth 1 -mindepth 1 -name '*.md' -print0)
+
+# Build the renderer image once (idempotent), then convert every body in a single run.
+if ! docker image inspect "$MD_IMAGE" >/dev/null 2>&1; then
+    docker build -t "$MD_IMAGE" "$SCRIPT_DIR/markdown"
+fi
+docker run --rm -v "$WORK:/data" "$MD_IMAGE" /data/in /data/out
+
+# Pass 2: fill each post's SEO placeholders and inject its rendered body.
 while IFS= read -r -d '' file; do
     name="$(basename "$file")"
     stem="${name%.md}"
@@ -88,12 +113,13 @@ while IFS= read -r -d '' file; do
     apply __TWITTER_TITLE__ "$(html_escape "$title")"
     apply __OG_URL__ "$(html_escape "$og_url")"
 
-    # TODO - no markdown to HTML conversion yet, just output the name of the blog post
-    main_content="<main style=\"display:flex;align-items:center;justify-content:center;min-height:60vh;\">\n  <p>$name</p>\n</main>"
-    printf '%s\n' "$page" | awk -v content="$main_content" '
-        /<main><\/main>/ { print content; next }
-        { print }
-    ' > "$out"
+    # Inject the rendered body into base.html's empty <main></main>. The body is
+    # read from a file (not passed via awk -v) so backslashes and "&" in real
+    # content are preserved verbatim; mirrors the FNR==NR merge in compose_posts.sh.
+    printf '%s\n' "$page" > "$WORK/page.html"
+    awk 'FNR==NR { c = c $0 ORS; next }
+         /<main><\/main>/ { printf "<main class=\"page post-content\">\n%s</main>\n", c; next }
+         { print }' "$WORK/out/$stem.html" "$WORK/page.html" > "$out"
 done < <(find "$BLOGS_DIR" -maxdepth 1 -mindepth 1 -name '*.md' -print0)
 
 echo "Posts converted successfully."

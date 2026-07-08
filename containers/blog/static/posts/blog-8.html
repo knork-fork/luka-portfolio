@@ -24,7 +24,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
   <link rel="icon" type="image/x-icon" href="/static/favicon/favicon.ico">
-  <link rel="stylesheet" href="/static/dist/style.c1f065d2.css" data-build="style.css">
+  <link rel="stylesheet" href="/static/dist/style.7b0e97e5.css" data-build="style.css">
 </head>
 <body>
 
@@ -37,8 +37,34 @@
     </ul>
   </nav>
 
-<main style="display:flex;align-items:center;justify-content:center;min-height:60vh;">
-  <p>blog-8.md</p>
+<main class="page post-content">
+<h1>Writing tests I actually trust</h1>
+<p>For a long time I chased <s>100% coverage</s> a green coverage badge. Then a fully-covered
+module shipped an embarrassing bug, and I changed how I think about tests.</p>
+<h2>Coverage is a map, not the territory</h2>
+<p>A test is only worth keeping if it would <strong>fail</strong> for a real reason. Assert on behaviour,
+not on implementation details:</p>
+<pre class="hljs"><code class="language-php"><span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PriceTest</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">TestCase</span>
+</span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testAppliesPercentageDiscount</span>(<span class="hljs-params"></span>): <span class="hljs-title">void</span>
+    </span>{
+        <span class="hljs-variable">$price</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Price</span>(<span class="hljs-number">100_00</span>);
+
+        <span class="hljs-variable">$discounted</span> = <span class="hljs-variable">$price</span>-&gt;<span class="hljs-title function_ invoke__">applyDiscount</span>(<span class="hljs-number">15</span>);
+
+        <span class="hljs-built_in">self</span>::<span class="hljs-title function_ invoke__">assertSame</span>(<span class="hljs-number">85_00</span>, <span class="hljs-variable">$discounted</span>-&gt;<span class="hljs-title function_ invoke__">cents</span>());
+    }
+}
+</code></pre>
+
+<h2>My checklist for a test worth keeping</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox"> Fails when the behaviour breaks</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox"> Has a name that reads like a sentence</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> Depends on the current implementation</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> Needs a comment to explain what it’s doing</li>
+</ul>
+<p>If a test only exists to bump a number, it is a liability, not an asset.</p>
 </main>
 
   <footer class="footer">

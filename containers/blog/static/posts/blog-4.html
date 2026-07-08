@@ -24,7 +24,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
   <link rel="icon" type="image/x-icon" href="/static/favicon/favicon.ico">
-  <link rel="stylesheet" href="/static/dist/style.c1f065d2.css" data-build="style.css">
+  <link rel="stylesheet" href="/static/dist/style.7b0e97e5.css" data-build="style.css">
 </head>
 <body>
 
@@ -37,8 +37,41 @@
     </ul>
   </nav>
 
-<main style="display:flex;align-items:center;justify-content:center;min-height:60vh;">
-  <p>blog-4.md</p>
+<main class="page post-content">
+<h1>Why I switched to containers</h1>
+<p>“Works on my machine” used to be a running joke on every project I touched. Containers
+did not make me a better engineer — they just deleted an entire category of problem.</p>
+<h2>What changed</h2>
+<ol>
+<li>The environment is <strong>code</strong>, reviewed like any other file</li>
+<li>Onboarding is one command instead of a wiki page</li>
+<li>Production and local drift far less</li>
+</ol>
+<h2>A minimal image</h2>
+<pre class="hljs"><code class="language-dockerfile"><span class="hljs-keyword">FROM</span> node:<span class="hljs-number">20</span>-alpine
+<span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /app</span>
+<span class="hljs-keyword">COPY</span><span class="language-bash"> package.json package-lock.json* ./</span>
+<span class="hljs-keyword">RUN</span><span class="language-bash"> npm install --omit=dev</span>
+<span class="hljs-keyword">COPY</span><span class="language-bash"> . .</span>
+<span class="hljs-keyword">CMD</span><span class="language-bash"> [<span class="hljs-string">&quot;node&quot;</span>, <span class="hljs-string">&quot;server.js&quot;</span>]</span>
+</code></pre>
+
+<h2>Wiring it up</h2>
+<pre class="hljs"><code class="language-yaml"><span class="hljs-attr">services:</span>
+  <span class="hljs-attr">app:</span>
+    <span class="hljs-attr">build:</span> <span class="hljs-string">.</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;3000:3000&quot;</span>
+</code></pre>
+
+<p>Then the entire stack starts with:</p>
+<pre class="hljs"><code class="language-bash">docker compose up --build
+</code></pre>
+
+<blockquote>
+<p>The goal isn’t containers for their own sake — it’s making the boring parts
+reproducible so you can spend attention on the interesting parts.</p>
+</blockquote>
 </main>
 
   <footer class="footer">

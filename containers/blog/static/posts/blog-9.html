@@ -24,7 +24,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
   <link rel="icon" type="image/x-icon" href="/static/favicon/favicon.ico">
-  <link rel="stylesheet" href="/static/dist/style.c1f065d2.css" data-build="style.css">
+  <link rel="stylesheet" href="/static/dist/style.7b0e97e5.css" data-build="style.css">
 </head>
 <body>
 
@@ -37,8 +37,33 @@
     </ul>
   </nav>
 
-<main style="display:flex;align-items:center;justify-content:center;min-height:60vh;">
-  <p>blog-9.md</p>
+<main class="page post-content">
+<h1>Rethinking how I use CSS grid</h1>
+<p>I spent years bolting flexbox onto layouts that wanted to be grids. Once I let grid do
+what it is good at, a lot of my CSS simply disappeared.</p>
+<h2>Before: fighting the layout</h2>
+<pre class="hljs"><code class="language-css"><span class="hljs-selector-class">.cards</span> { <span class="hljs-attribute">display</span>: flex; <span class="hljs-attribute">flex-wrap</span>: wrap; }
+<span class="hljs-selector-class">.card</span>  { <span class="hljs-attribute">width</span>: <span class="hljs-built_in">calc</span>(<span class="hljs-number">33.333%</span> - <span class="hljs-number">1rem</span>); <span class="hljs-attribute">margin</span>: <span class="hljs-number">0.5rem</span>; }
+</code></pre>
+
+<p>Those magic <code>calc()</code>s broke every time the gap changed.</p>
+<hr>
+<h2>After: describing the layout</h2>
+<pre class="hljs"><code class="language-css"><span class="hljs-selector-class">.cards</span> {
+  <span class="hljs-attribute">display</span>: grid;
+  <span class="hljs-attribute">grid-template-columns</span>: <span class="hljs-built_in">repeat</span>(auto-fill, <span class="hljs-built_in">minmax</span>(<span class="hljs-number">240px</span>, <span class="hljs-number">1</span>fr));
+  <span class="hljs-attribute">gap</span>: <span class="hljs-number">1rem</span>;
+}
+</code></pre>
+
+<p>The markup stays boring, which is the point:</p>
+<pre class="hljs"><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;cards&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">article</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;card&quot;</span>&gt;</span>…<span class="hljs-tag">&lt;/<span class="hljs-name">article</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">article</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;card&quot;</span>&gt;</span>…<span class="hljs-tag">&lt;/<span class="hljs-name">article</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+
+<p>No media queries, no <code>calc()</code>, no margins fighting the gap. The grid reflows itself.</p>
 </main>
 
   <footer class="footer">

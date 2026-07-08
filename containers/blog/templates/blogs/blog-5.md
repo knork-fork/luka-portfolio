@@ -9,8 +9,38 @@ topic: null
 thumbnail: null
 embed_text: Practical wins for faster page loads — lazy loading, smaller bundles, and shaving off the milliseconds that add up.
 ### metadata
+
 # Shaving milliseconds off page loads
 
-Some thoughts on web performance.
+Performance work is unglamorous and *addictive*. You chase a 200ms win, ship it, and
+immediately go looking for the next one.
 
-test 5
+## Measure first
+
+Before touching anything, grab real numbers:
+
+| Metric  | Before | After  |
+|---------|--------|--------|
+| LCP     | 2.9s   | 1.4s   |
+| JS sent | 480 KB | 120 KB |
+
+---
+
+## Load what you need, when you need it
+
+Deferring off-screen images is almost free:
+
+```html
+<img src="/hero.avif" alt="" loading="lazy" decoding="async">
+```
+
+And code-split the parts most visitors never reach:
+
+```js
+button.addEventListener("click", async () => {
+  const { openEditor } = await import("./editor.js");
+  openEditor();
+});
+```
+
+The fastest code is the code you never send.
