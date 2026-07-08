@@ -11,9 +11,16 @@ services:
         ports:
             - "20242:80"
 
-    #blog:
-    #    container_name: portfolio-grav
-    #    restart: unless-stopped
-    #    image: getgrav/grav
-    #    volumes:
-    #        - ./containers/blog/site:/var/www/html
+    blog:
+        container_name: portfolio-blog
+        restart: unless-stopped
+        image: nginx:latest
+        working_dir: /application
+        depends_on:
+            - webserver
+        volumes:
+            - './containers/blog:/application'
+            - './containers/blog/config/nginx.conf:/etc/nginx/conf.d/default.conf'
+            - './var/logs/nginx:/var/log/nginx'
+        ports:
+            - "20243:80"

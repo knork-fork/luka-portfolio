@@ -2,3 +2,4 @@ User-agent: *
 Disallow:
 Allow: /
 Sitemap: https://luka-knezic.com/sitemap.xml
+Sitemap: https://luka-knezic.com/blog/sitemap.xml
