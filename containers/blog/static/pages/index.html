@@ -37,11 +37,49 @@
     </ul>
   </nav>
 
-<main class="page" style="display: flex; align-items: center; justify-content: center; flex: 1;">
-<section style="text-align: center;">
-    <h1 style="font-size: 3rem; margin-bottom: 0.5rem;">No Blogs Yet</h1>
-    <p style="color: var(--color-text-secondary, #888); font-size: 1.125rem;">There are no blog posts to show right now. Check back soon!</p>
-</section>
+<main class="page blog-index">
+  <section class="blog-hero">
+    <h1>Blog</h1>
+    <p class="blog-subtitle">Notes and write-ups on backend systems, software architecture, and engineering experiments.</p>
+  </section>
+  <section class="blog-controls">
+    <div class="blog-controls-row">
+      <input class="blog-search" type="search" placeholder="Search posts..." aria-label="Search posts" autocomplete="off">
+      <div class="blog-tags-menu">
+        <button class="blog-tags-toggle" type="button" aria-haspopup="true" aria-expanded="false">Tags</button>
+        <div class="blog-tags-popover" hidden>
+          <button class="blog-tags-clear" type="button">Clear filters</button>
+          <div class="blog-filter" role="group" aria-label="Filter posts by tag">
+            <button class="blog-filter-chip" type="button" data-tag="meta" aria-pressed="false">Meta</button>          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="blog-featured">
+    <h2>Featured</h2>
+<a class="blog-card blog-card-grad-0 blog-card-featured" href="/blog/why-would-i-start-a-blog" data-tags="meta">
+  <ul class="blog-card-tags">
+    <li class="blog-card-tag">Meta</li>
+  </ul>
+  <span class="blog-card-extra">Introduction</span>
+  <h3 class="blog-card-title">Why would I start a blog?</h3>
+  <span class="blog-card-subtitle">Or, how to get yourself out there</span>
+</a>
+  </section>
+  <div class="blog-grid">
+<a class="blog-card blog-card-grad-0" href="/blog/why-would-i-start-a-blog" data-tags="meta">
+  <ul class="blog-card-tags">
+    <li class="blog-card-tag">Meta</li>
+  </ul>
+  <span class="blog-card-extra">Introduction</span>
+  <h3 class="blog-card-title">Why would I start a blog?</h3>
+  <span class="blog-card-subtitle">Or, how to get yourself out there</span>
+</a>
+
+  </div>
+  <p class="blog-empty" hidden>No posts match your filters.</p>
+  <nav class="blog-pagination" aria-label="Blog pages" hidden></nav>
+  <script type="application/json" id="blog-index-data">[{"name":"why-would-i-start-a-blog","title":"Why would I start a blog?","header":"Introduction","subtitle":"Or, how to get yourself out there","tags":["Meta"],"topic":null,"gradient":"blog-card-grad-0","is_featured":true}]</script>
 </main>
 
   <footer class="footer">
