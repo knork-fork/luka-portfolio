@@ -73,6 +73,10 @@ body {
 
 /* --- Layout --- */
 
+main {
+  flex: 1;
+}
+
 .page {
   flex: 1;
   width: 100%;
