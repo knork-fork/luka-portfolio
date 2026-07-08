@@ -710,6 +710,197 @@ a:hover {
   color: var(--color-text-tertiary);
 }
 
+/* --- Blog index --- */
+
+.blog-hero {
+  margin-bottom: 3rem;
+}
+
+.blog-hero h1 {
+  margin-bottom: 0.5rem;
+}
+
+.blog-subtitle {
+  font-size: 0.95rem;
+  color: var(--color-text-tertiary);
+}
+
+.blog-featured {
+  margin-bottom: 3.5rem;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* Full-gradient editorial blog card, integrated with the site radius/spacing */
+.blog-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 200px;
+  padding: 1.75rem 2rem;
+  border-radius: 8px;
+  overflow: hidden;
+  color: #ffffff;
+  text-decoration: none;
+  font-family: 'Poppins', 'Inter', sans-serif;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: outline-color 0.2s;
+}
+
+.blog-card:hover,
+.blog-card:focus-visible {
+  outline-color: var(--color-accent);
+}
+
+/* No focus ring on mouse click; keyboard focus still shows the UA ring */
+.blog-card:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Keep card text above the band layers */
+.blog-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Band layers: crisp-edged near the top of the card (::before), cross-fading
+   into a blurred, dissipating copy toward the bottom (::after) */
+.blog-card::before,
+.blog-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--blog-streaks);
+  pointer-events: none;
+}
+
+.blog-card::before {
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.9) 40%, rgba(0, 0, 0, 0) 95%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.9) 40%, rgba(0, 0, 0, 0) 95%);
+}
+
+.blog-card::after {
+  inset: -24px; /* pull edges outside the card so the blur doesn't bleed transparent borders in */
+  filter: blur(14px);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.5) 70%, rgba(0, 0, 0, 0.3) 100%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.5) 70%, rgba(0, 0, 0, 0.3) 100%);
+}
+
+/* Bold diagonal facets over each card's base gradient: alternating light
+   and dark crisp-edged bands, like stacked translucent sheets */
+:root {
+  --blog-streaks:
+    linear-gradient(108deg,
+      rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.22) 20%, rgba(0, 0, 0, 0) 20%,
+      rgba(255, 255, 255, 0) 44%, rgba(255, 255, 255, 0.13) 44%, rgba(255, 255, 255, 0.13) 64%,
+      rgba(0, 0, 0, 0.12) 64%, rgba(0, 0, 0, 0.12) 81%,
+      rgba(255, 255, 255, 0.12) 81%, rgba(255, 255, 255, 0.12) 100%);
+}
+
+.blog-card-grad-0 {
+  background: linear-gradient(135deg, #08192e 0%, #175a7c 50%, #2fa3c0 100%);
+}
+
+.blog-card-grad-1 {
+  background: linear-gradient(135deg, #071837 0%, #1a4fa0 50%, #3b8fd8 100%);
+}
+
+.blog-card-grad-2 {
+  background: linear-gradient(135deg, #3d0a5e 0%, #8f1fbe 50%, #e04fd4 100%);
+}
+
+.blog-card-grad-3 {
+  background: linear-gradient(135deg, #4d0668 0%, #a81cae 50%, #e858c8 100%);
+}
+
+.blog-card-grad-4 {
+  background: linear-gradient(135deg, #180a4a 0%, #45189e 50%, #8430dc 100%);
+}
+
+.blog-card-grad-5 {
+  background: linear-gradient(135deg, #1d0b52 0%, #4f1fb4 55%, #9040e8 100%);
+}
+
+.blog-card-extra {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.blog-card-title {
+  font-family: "Poppins", var(--font-sans);
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  text-align: left;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+  max-width: 20ch;
+  color: #ffffff;
+  margin: 0.6rem 0 0;
+}
+
+.blog-card-subtitle {
+  font-size: 0.85rem;
+  font-weight: 400;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 0.6rem;
+}
+
+.blog-card-featured {
+  min-height: 300px;
+  padding: 2.5rem 2.75rem;
+}
+
+.blog-card-featured .blog-card-title {
+  font-size: 2.75rem;
+  max-width: 16ch;
+  margin-top: 0.75rem;
+}
+
+.blog-card-featured .blog-card-subtitle {
+  font-size: 0.95rem;
+  margin-top: 0.75rem;
+}
+
+.blog-card-hidden {
+  display: none;
+}
+
+.blog-show-more {
+  display: block;
+  margin: 2rem auto 0;
+  padding: 0.65rem 1.75rem;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.blog-show-more:hover {
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+}
+
 /* --- Projects page: wider desktop layout --- */
 
 @media (min-width: 1100px) {
@@ -773,6 +964,18 @@ a:hover {
 
   .other-grid {
     grid-template-columns: 1fr;
+  }
+
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-card-title {
+    font-size: 1.4rem;
+  }
+
+  .blog-card-featured .blog-card-title {
+    font-size: 2rem;
   }
 
   .about-photo {
