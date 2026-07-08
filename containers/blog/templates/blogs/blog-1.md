@@ -10,7 +10,7 @@ thumbnail: null
 embed_text: Building a personal portfolio: a static blog and featured projects, glued together with plain shell scripts.
 ### metadata
 
-# Building my portfolio blog
+## Building my portfolio blog
 
 This site is intentionally boring: **static HTML**, a pinch of CSS, and a handful of
 shell scripts. No framework, no database, no build server. Here is how the pieces fit

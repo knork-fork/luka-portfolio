@@ -356,3 +356,71 @@
   syncControls();
   render();
 })();
+
+// Code-block copy buttons on blog post pages. Wraps each rendered code block in
+// a positioned container and adds a "Copy" button revealed on hover. No-ops on
+// pages without rendered Markdown code (e.g. the blog listing).
+(function () {
+  "use strict";
+
+  var blocks = document.querySelectorAll(".post-content pre.hljs");
+  if (!blocks.length) return;
+
+  Array.prototype.forEach.call(blocks, function (pre) {
+    // Wrap the <pre> so the button can be pinned to the block while the code
+    // itself scrolls horizontally underneath it.
+    var wrap = document.createElement("div");
+    wrap.className = "code-block";
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "code-copy-btn";
+    btn.textContent = "Copy";
+    btn.setAttribute("aria-label", "Copy code to clipboard");
+    wrap.appendChild(btn);
+
+    var resetTimer = null;
+
+    function flash(label) {
+      btn.textContent = label;
+      btn.classList.add("is-copied");
+      if (resetTimer) clearTimeout(resetTimer);
+      resetTimer = setTimeout(function () {
+        btn.textContent = "Copy";
+        btn.classList.remove("is-copied");
+      }, 1500);
+    }
+
+    btn.addEventListener("click", function () {
+      var code = pre.querySelector("code");
+      var text = code ? code.textContent : pre.textContent;
+
+      function fallback() {
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand("copy");
+          flash("Copied");
+        } catch (e) {
+          /* clipboard unavailable */
+        }
+        document.body.removeChild(ta);
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          flash("Copied");
+        }, fallback);
+      } else {
+        fallback();
+      }
+    });
+  });
+})();

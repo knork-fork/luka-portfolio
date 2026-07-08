@@ -1157,50 +1157,153 @@ a:hover {
     padding: 1.25rem 1.25rem;
   }
 
-  .post-content h1 {
+  .post-card {
+    padding: 1.25rem 1.35rem 1.75rem;
+  }
+
+  .post-title {
     font-size: 1.9rem;
   }
 }
 
-/* --- Blog post body (rendered markdown) --- */
+/* --- Blog post article page --- */
+
+/* Back-to-blog link sits above the whole article */
+.post-back {
+  display: inline-block;
+  margin-bottom: 1.25rem;
+  color: var(--color-text-tertiary);
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.post-back:hover {
+  color: var(--color-text-secondary);
+}
+
+/* Standalone article header: metadata + title + lead. Sits on the page
+   background and is separated from the white content card below by spacing
+   and a hairline, so the two areas read as clearly distinct sections. */
+.post-header {
+  margin-bottom: 1.25rem;
+}
+
+/* Whiter content area for the rendered Markdown (footer stays outside). Kept
+   subtle — a barely-there hairline + soft radius, not a document panel. */
+.post-card {
+  background: var(--color-surface);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  padding: 1.25rem 2rem 2rem;
+}
+
+/* Quiet metadata row above the title: tags + last-modified date */
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem 0.85rem;
+  margin-bottom: 1.1rem;
+}
+
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Subtle clickable pills — quieter than the on-card blog tags */
+.post-tag {
+  display: inline-block;
+  padding: 0.15rem 0.55rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-bg);
+  color: var(--color-text-secondary);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.post-tag:hover {
+  color: var(--color-text);
+  border-color: var(--color-text-tertiary);
+}
+
+.post-date {
+  color: var(--color-text-tertiary);
+  font-size: 0.78rem;
+}
+
+/* Prominent, large article title (the page's single h1) */
+.post-title {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 2.6rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+}
+
+/* Readable lead/intro under the title */
+.post-lead {
+  max-width: 68ch;
+  margin: 1rem 0 0;
+  color: var(--color-text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* --- Rendered Markdown body --- */
 
 .post-content {
   font-size: 1rem;
+}
+
+/* Slightly narrower measure for prose; tables and code blocks stay full-width
+   and align to the same left edge inside the card. */
+.post-content > p,
+.post-content > ul,
+.post-content > ol,
+.post-content > h2,
+.post-content > h3,
+.post-content > h4,
+.post-content > blockquote {
+  max-width: 68ch;
 }
 
 .post-content > *:first-child {
   margin-top: 0;
 }
 
-.post-content h1,
 .post-content h2,
 .post-content h3,
 .post-content h4 {
   color: var(--color-text);
   font-weight: 700;
   letter-spacing: -0.02em;
-  line-height: 1.25;
-  margin: 2.5rem 0 1rem;
+  line-height: 1.3;
+  margin: 2.75rem 0 1rem;
   text-transform: none; /* undo the global uppercase-label h2 */
 }
 
-.post-content h1 {
-  font-size: 2.4rem;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-  margin: 0 0 1.5rem;
-}
-
 .post-content h2 {
-  font-size: 1.7rem;
+  font-size: 1.55rem;
+  margin-top: 3rem;
 }
 
 .post-content h3 {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 
 .post-content h4 {
-  font-size: 1.1rem;
+  font-size: 1.02rem;
 }
 
 .post-content p,
@@ -1211,6 +1314,7 @@ a:hover {
 
 .post-content p {
   margin: 0 0 1.25rem;
+  line-height: 1.75;
 }
 
 .post-content a {
@@ -1233,7 +1337,8 @@ a:hover {
 }
 
 .post-content li {
-  margin: 0.35rem 0;
+  margin: 0.4rem 0;
+  line-height: 1.7;
 }
 
 .post-content li::marker {
@@ -1254,61 +1359,115 @@ a:hover {
 }
 
 .post-content blockquote {
-  margin: 0 0 1.25rem;
-  padding: 0.25rem 0 0.25rem 1.25rem;
-  border-left: 3px solid var(--color-border);
-  color: var(--color-text-tertiary);
+  margin: 1.75rem 0;
+  padding: 0.85rem 1.25rem;
+  border-left: 3px solid var(--color-accent);
+  border-radius: 0 6px 6px 0;
+  background: var(--color-bg);
+  color: var(--color-text-secondary);
+}
+
+.post-content blockquote > :last-child {
+  margin-bottom: 0;
 }
 
 .post-content hr {
   border: 0;
   border-top: 1px solid var(--color-border);
-  margin: 2.5rem 0;
+  margin: 2.75rem 0;
 }
 
+/* Inline code */
 .post-content code {
   font-family: var(--font-mono);
   font-size: 0.85em;
-  background: var(--color-surface);
+  background: var(--color-bg);
   border: 1px solid var(--color-border);
   border-radius: 4px;
-  padding: 0.15em 0.35em;
+  padding: 0.12em 0.35em;
+}
+
+/* Fenced code blocks (wrapped in .code-block by blog.js for the copy button) */
+.code-block {
+  position: relative;
+  margin: 1.75rem 0;
+}
+
+.code-block > pre {
+  margin: 0;
 }
 
 .post-content pre {
-  margin: 0 0 1.5rem;
-  padding: 1rem 1.25rem;
-  background: var(--color-surface);
+  margin: 1.75rem 0;
+  padding: 1rem 1.15rem;
+  background: var(--color-bg);
   border: 1px solid var(--color-border);
   border-radius: 8px;
   overflow-x: auto;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .post-content pre code {
-  font-size: 0.85rem;
+  font-size: 0.83rem;
   background: none;
   border: 0;
   border-radius: 0;
   padding: 0;
 }
 
+/* Copy-to-clipboard button, revealed on hover of the code block */
+.code-copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  line-height: 1.2;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.code-block:hover .code-copy-btn,
+.code-copy-btn:focus-visible {
+  opacity: 1;
+}
+
+.code-copy-btn:hover {
+  color: var(--color-text);
+  border-color: var(--color-text-tertiary);
+}
+
+.code-copy-btn.is-copied {
+  opacity: 1;
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+/* Tables — minimal, thin borders + subtle header */
 .post-content table {
   width: 100%;
   border-collapse: collapse;
-  margin: 0 0 1.5rem;
-  font-size: 0.9rem;
+  margin: 1.75rem 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
 }
 
 .post-content th,
 .post-content td {
   border: 1px solid var(--color-border);
-  padding: 0.5rem 0.75rem;
+  padding: 0.55rem 0.8rem;
   text-align: left;
+  vertical-align: top;
 }
 
-.post-content th {
-  background: var(--color-surface);
+.post-content thead th {
+  background: var(--color-bg);
   color: var(--color-text);
   font-weight: 600;
 }

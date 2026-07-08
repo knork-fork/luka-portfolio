@@ -5,6 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 BLOGS_DIR="$SCRIPT_DIR/../templates/blogs"
 BASE="$SCRIPT_DIR/../templates/components/base.html"
 OUTPUT_DIR="$SCRIPT_DIR/../static/posts"
+INDEX="$SCRIPT_DIR/../index.json"
 
 # Public site root; per-post canonical URLs are built from this.
 SITE_URL="https://luka-knezic.com/blog"
@@ -29,7 +30,7 @@ MD_IMAGE="blog-markdown:1"
 # Kept inside the repo (under $HOME) because snap-confined Docker cannot bind-mount /tmp.
 WORK="$(mktemp -d "$SCRIPT_DIR/.mdwork.XXXXXX")"
 trap 'rm -rf "$WORK"' EXIT
-mkdir -p "$WORK/in" "$WORK/out"
+mkdir -p "$WORK/in" "$WORK/out" "$WORK/main"
 
 # Read a single key's value from a blog's "### metadata ... ### metadata" block
 meta_value() {
@@ -63,12 +64,19 @@ apply() {
     page="${page//$token/$value}"
 }
 
-# Pass 1: strip each post's "### metadata" block, leaving just the body markdown.
-# Everything after the closing "### metadata" fence is the body; the fence line
-# itself is not emitted because seen is still 1 when the print rule runs for it.
+# Pass 1: reduce each post to its body markdown. Everything after the closing
+# "### metadata" fence is the body. The leading top-level "# H1" is dropped
+# because the title is rendered in the standalone article header instead (from
+# the post's metadata), so keeping it here would duplicate the title.
 while IFS= read -r -d '' file; do
     stem="$(basename "$file" .md)"
-    awk 'seen==2 { print } /^### metadata$/ { seen++ }' "$file" > "$WORK/in/$stem.md"
+    awk '
+        /^### metadata$/ { seen++; next }
+        seen < 2 { next }
+        !started && /^[[:space:]]*$/ { next }   # skip blank lines before the body
+        !started && /^# / { started = 1; next } # drop the leading H1 title
+        { started = 1; print }
+    ' "$file" > "$WORK/in/$stem.md"
 done < <(find "$BLOGS_DIR" -maxdepth 1 -mindepth 1 -name '*.md' -print0)
 
 # Build the renderer image once (idempotent), then convert every body in a single run.
@@ -88,6 +96,25 @@ while IFS= read -r -d '' file; do
     embed_text="$(meta_value "$file" embed_text)"
     title="$(meta_value "$file" title)"
     [ -z "$title" ] && title="$stem"
+    subtitle="$(meta_value "$file" subtitle)"
+
+    # Quiet metadata row: tag pills (from the post's metadata) + last-modified
+    # date (from index.json, which build_index.sh derives from git history).
+    tags_html=""
+    while IFS= read -r tag; do
+        [ -n "$tag" ] || continue
+        # Slug must match blog.js slugify() so /blog?tags=<slug> pre-selects it.
+        tag_slug="$(printf '%s' "$tag" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')"
+        tags_html+="        <li><a class=\"post-tag\" href=\"/blog?tags=$(html_escape "$tag_slug")\">$(html_escape "$tag")</a></li>"$'\n'
+    done < <(printf '%s' "$(meta_value "$file" tags)" | jq -r '.[]? // empty' 2>/dev/null || true)
+
+    date_html=""
+    iso_modified="$(jq -r --arg n "$stem" '.[] | select(.name == $n) | .modified // empty' "$INDEX" 2>/dev/null || true)"
+    if [ -n "$iso_modified" ]; then
+        human_date="$(date -d "$iso_modified" '+%b %-d, %Y' 2>/dev/null || true)"
+        [ -n "$human_date" ] && \
+            date_html="      <time class=\"post-date\" datetime=\"${iso_modified%%T*}\">Updated $human_date</time>"$'\n'
+    fi
 
     # <meta name="description"> uses seo_description, else the base.html default
     meta_description="$DEFAULT_META_DESCRIPTION"
@@ -113,13 +140,41 @@ while IFS= read -r -d '' file; do
     apply __TWITTER_TITLE__ "$(html_escape "$title")"
     apply __OG_URL__ "$(html_escape "$og_url")"
 
-    # Inject the rendered body into base.html's empty <main></main>. The body is
-    # read from a file (not passed via awk -v) so backslashes and "&" in real
-    # content are preserved verbatim; mirrors the FNR==NR merge in compose_posts.sh.
+    # Assemble the inner <main>: back link, a standalone article header
+    # (metadata + title + lead), then the rendered body in a separate content
+    # card below it. Built into a file (not passed via awk -v) so backslashes
+    # and "&" in real content are preserved verbatim.
+    {
+        printf '  <a class="post-back" href="/blog">&larr; Back to Blog</a>\n'
+        printf '  <header class="post-header">\n'
+        if [ -n "$tags_html" ] || [ -n "$date_html" ]; then
+            printf '    <div class="post-meta">\n'
+            if [ -n "$tags_html" ]; then
+                printf '      <ul class="post-tags">\n'
+                printf '%s' "$tags_html"
+                printf '      </ul>\n'
+            fi
+            [ -n "$date_html" ] && printf '%s' "$date_html"
+            printf '    </div>\n'
+        fi
+        printf '    <h1 class="post-title">%s</h1>\n' "$(html_escape "$title")"
+        if [ -n "$subtitle" ] && [ "$subtitle" != "null" ]; then
+            printf '    <p class="post-lead">%s</p>\n' "$(html_escape "$subtitle")"
+        fi
+        printf '  </header>\n'
+        printf '  <article class="post-card">\n'
+        printf '    <div class="post-content">\n'
+        cat "$WORK/out/$stem.html"
+        printf '    </div>\n'
+        printf '  </article>\n'
+    } > "$WORK/main/$stem.html"
+
+    # Inject the assembled article into base.html's empty <main></main>; mirrors
+    # the FNR==NR merge in compose_posts.sh.
     printf '%s\n' "$page" > "$WORK/page.html"
     awk 'FNR==NR { c = c $0 ORS; next }
-         /<main><\/main>/ { printf "<main class=\"page post-content\">\n%s</main>\n", c; next }
-         { print }' "$WORK/out/$stem.html" "$WORK/page.html" > "$out"
+         /<main><\/main>/ { printf "<main class=\"page post\">\n%s</main>\n", c; next }
+         { print }' "$WORK/main/$stem.html" "$WORK/page.html" > "$out"
 done < <(find "$BLOGS_DIR" -maxdepth 1 -mindepth 1 -name '*.md' -print0)
 
 echo "Posts converted successfully."
