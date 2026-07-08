@@ -20,7 +20,7 @@ if [ "$(jq 'length' "$INDEX")" -eq 0 ]; then
 fi
 
 # Required keys present on each non-null, non-empty entry
-REQUIRED_KEYS='["name","title","created","modified","tags","topic","thumbnail","is_featured"]'
+REQUIRED_KEYS='["name","title","created","modified","tags","topic","thumbnail","is_featured","header","subtitle"]'
 MISSING=$(jq --argjson keys "$REQUIRED_KEYS" '
   [ .[] | select(type == "object" and length > 0) |
     . as $entry |

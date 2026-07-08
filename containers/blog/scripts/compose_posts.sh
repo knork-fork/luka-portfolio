@@ -24,6 +24,14 @@ if ! "$SCRIPT_DIR/validate_index.sh"; then
     exit 0
 fi
 
-# TODO: render posts
+# Build /blog page
+if ! "$SCRIPT_DIR/build_index_html_page.sh"; then
+    echo "Error: failed to build blog index page." >&2
+    exit 1
+fi
 
-echo "Posts composed successfully."
+# Build individual blog post pages
+if ! "$SCRIPT_DIR/convert_markdown_to_html.sh"; then
+    echo "Error: failed to convert markdown to HTML." >&2
+    exit 1
+fi
