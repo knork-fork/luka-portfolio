@@ -9,7 +9,7 @@ services:
             - './containers/webserver/config/nginx.conf:/etc/nginx/conf.d/default.conf'
             - './var/logs/nginx:/var/log/nginx'
         ports:
-            - "20242:80"
+            - "24242:80"
 
     blog:
         container_name: portfolio-blog
@@ -23,4 +23,4 @@ services:
             - './containers/blog/config/nginx.conf:/etc/nginx/conf.d/default.conf'
             - './var/logs/nginx:/var/log/nginx'
         ports:
-            - "20243:80"
+            - "24243:80"
