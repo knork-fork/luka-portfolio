@@ -83,6 +83,7 @@ while IFS= read -r -d '' file; do
     apply __META_DESCRIPTION__ "$(html_escape "$meta_description")"
     apply __OG_DESCRIPTION__ "$(html_escape "$embed_description")"
     apply __TWITTER_DESCRIPTION__ "$(html_escape "$embed_description")"
+    apply __PAGE_TITLE__ "$(html_escape "$title — Luka Knežić")"
     apply __OG_TITLE__ "$(html_escape "$title")"
     apply __TWITTER_TITLE__ "$(html_escape "$title")"
     apply __OG_URL__ "$(html_escape "$og_url")"

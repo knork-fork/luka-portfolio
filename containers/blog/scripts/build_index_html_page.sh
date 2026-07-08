@@ -150,6 +150,7 @@ awk 'FNR==NR { content=content $0 ORS; next }
 # The listing page is not a single post, so fill base.html's SEO placeholders
 # with the generic blog defaults (delimiter "|" since the URL contains slashes).
 sed -i \
+    -e 's|__PAGE_TITLE__|Blog — Luka Knežić|' \
     -e 's|__META_DESCRIPTION__|Notes and write-ups on backend systems, software architecture, and engineering experiments by Luka Knežić.|' \
     -e 's|__OG_DESCRIPTION__|Notes and write-ups on backend systems, software architecture, and engineering experiments.|' \
     -e 's|__OG_TITLE__|Blog — Luka Knežić|' \

@@ -22,6 +22,7 @@ if ! "$SCRIPT_DIR/validate_index.sh"; then
          { print }' "$NO_BLOGS" "$BASE" > "$OUTPUT"
     # Fill base.html's SEO placeholders with the generic blog defaults.
     sed -i \
+        -e 's|__PAGE_TITLE__|Blog — Luka Knežić|' \
         -e 's|__META_DESCRIPTION__|Notes and write-ups on backend systems, software architecture, and engineering experiments by Luka Knežić.|' \
         -e 's|__OG_DESCRIPTION__|Notes and write-ups on backend systems, software architecture, and engineering experiments.|' \
         -e 's|__OG_TITLE__|Blog — Luka Knežić|' \
