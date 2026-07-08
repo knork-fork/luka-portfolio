@@ -11,7 +11,8 @@ TAGS_TEMPLATE="$BLOG_DIR/templates/components/blog_card_tags.html"
 TAG_TEMPLATE="$BLOG_DIR/templates/components/blog_card_tag.html"
 FEATURED_TEMPLATE="$BLOG_DIR/templates/components/blog_featured_section.html"
 GRID_TEMPLATE="$BLOG_DIR/templates/components/blog_grid.html"
-SHOW_MORE_TEMPLATE="$BLOG_DIR/templates/components/blog_show_more.html"
+CONTROLS_TEMPLATE="$BLOG_DIR/templates/components/blog_controls.html"
+CHIP_TEMPLATE="$BLOG_DIR/templates/components/blog_filter_chip.html"
 OUTPUT="$BLOG_DIR/static/pages/index.html"
 
 GRADIENT_COUNT=6
@@ -43,6 +44,31 @@ build_tags() {
     render "$TAGS_TEMPLATE" TAGS "$items"
 }
 
+# Lowercase a tag and turn spaces into hyphens for use in class/data/URL slugs
+slugify() {
+    printf '%s' "$1" | tr '[:upper:] ' '[:lower:]-'
+}
+
+# Space-separated tag slugs for a card's data-tags attribute (used by the filter)
+build_tag_slugs() {
+    local tags_json="${1:-[]}" out=""
+    while IFS= read -r tag; do
+        [ -n "$tag" ] || continue
+        out+="$(slugify "$tag") "
+    done < <(printf '%s' "$tags_json" | jq -r '.[]?')
+    printf '%s' "${out% }"
+}
+
+# Render the tag-filter chips from the deduped, sorted union of all post tags
+build_tag_chips() {
+    local items=""
+    while IFS= read -r tag; do
+        [ -n "$tag" ] || continue
+        items+="$(render "$CHIP_TEMPLATE" TAG_SLUG "$(slugify "$tag")" TAG "$(html_escape "$tag")")"$'\n'
+    done < <(jq -r '[.[].tags[]?] | unique | .[]' "$INDEX")
+    printf '%s' "$items"
+}
+
 render() {
     local template="$1" file
     file="$(cat "$template")"
@@ -69,6 +95,7 @@ emit_card() {
     render "$CARD_TEMPLATE" \
         CARD_CLASS "$card_class" \
         CARD_NAME "$(html_escape "$name")" \
+        CARD_TAG_SLUGS "$(build_tag_slugs "$tags")" \
         CARD_TAGS "$(build_tags "$tags")" \
         CARD_EXTRA "$(html_escape "$header")" \
         CARD_TITLE "$(html_escape "$title")" \
@@ -80,6 +107,8 @@ trap 'rm -f "$CONTENT_FILE"' EXIT
 
 {
     cat "$BLOG_HEADER"
+
+    render "$CONTROLS_TEMPLATE" TAG_CHIPS "$(build_tag_chips)"
 
     featured="$(jq -c '[.[] | select(.is_featured == true)][0] // empty' "$INDEX")"
     if [ -n "$featured" ]; then
@@ -107,11 +136,9 @@ trap 'rm -f "$CONTENT_FILE"' EXIT
         i=$((i + 1))
     done < <(jq -c 'sort_by(.created) | reverse | .[]' "$INDEX")
 
-    show_more=""
-    total="$(jq 'length' "$INDEX")"
-    [ "$total" -gt "$VISIBLE_COUNT" ] && show_more="$(cat "$SHOW_MORE_TEMPLATE")"
-
-    render "$GRID_TEMPLATE" GRID_CARDS "$cards" SHOW_MORE "$show_more"
+    # Cards beyond the first page start hidden (page 1 for no-JS); blog.js takes
+    # over visibility and renders the numbered pagination controls.
+    render "$GRID_TEMPLATE" GRID_CARDS "$cards"
 } > "$CONTENT_FILE"
 
 mkdir -p "$(dirname "$OUTPUT")"
