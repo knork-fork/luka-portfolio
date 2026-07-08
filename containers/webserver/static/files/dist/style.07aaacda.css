@@ -1141,6 +1141,17 @@ a:hover {
     font-size: 2rem;
   }
 
+  /* Full-width tags menu so the popover spans the row instead of overflowing off-screen */
+  .blog-tags-menu {
+    width: 100%;
+  }
+
+  .blog-tags-popover {
+    left: 0;
+    right: 0;
+    max-width: none;
+  }
+
   .about-photo {
     width: 200px;
     height: 200px;
