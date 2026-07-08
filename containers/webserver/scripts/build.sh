@@ -2,7 +2,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-BASE_DIR="$SCRIPT_DIR/../public/static"
+BASE_DIR="$SCRIPT_DIR/../static"
 DIST_DIR="$BASE_DIR/files/dist"
 STYLES_DIR="$BASE_DIR/files/styles"
 JS_DIR="$BASE_DIR/files/js"
