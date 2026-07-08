@@ -3,7 +3,7 @@ header: Backend bits
 title: Why I switched to containers
 subtitle: A short story about reproducible builds and fewer surprises.
 is_featured: false
-tags: []
+tags: ["Docker", "DevOps"]
 topic: null
 thumbnail: null
 embed_text: null

@@ -3,7 +3,7 @@ header: Career
 title: Notes from my first year as a developer
 subtitle: What I wish I had known before writing production code.
 is_featured: false
-tags: []
+tags: ["Career"]
 topic: null
 thumbnail: null
 embed_text: null

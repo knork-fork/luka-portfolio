@@ -3,7 +3,7 @@ header: Bloggy blog
 title: Personal portfolio blog
 subtitle: Personal portfolio page with a blog and featured projects.
 is_featured: true
-tags: []
+tags: ["Portfolio", "Web"]
 topic: null
 thumbnail: null
 embed_text: null

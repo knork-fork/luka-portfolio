@@ -7,6 +7,8 @@ INDEX="$BLOG_DIR/index.json"
 BASE="$BLOG_DIR/templates/components/base.html"
 BLOG_HEADER="$BLOG_DIR/templates/components/blog_header.html"
 CARD_TEMPLATE="$BLOG_DIR/templates/components/blog_card.html"
+TAGS_TEMPLATE="$BLOG_DIR/templates/components/blog_card_tags.html"
+TAG_TEMPLATE="$BLOG_DIR/templates/components/blog_card_tag.html"
 FEATURED_TEMPLATE="$BLOG_DIR/templates/components/blog_featured_section.html"
 GRID_TEMPLATE="$BLOG_DIR/templates/components/blog_grid.html"
 SHOW_MORE_TEMPLATE="$BLOG_DIR/templates/components/blog_show_more.html"
@@ -30,6 +32,17 @@ pick_gradient_class() {
     printf 'blog-card-grad-%s' "$((sum % GRADIENT_COUNT))"
 }
 
+# Render a card's tags (a JSON array) via the tag components; nothing when empty
+build_tags() {
+    local tags_json="${1:-[]}" count items=""
+    count=$(printf '%s' "$tags_json" | jq 'length' 2>/dev/null || echo 0)
+    [ "$count" -gt 0 ] || return 0
+    while IFS= read -r tag; do
+        items+="$(render "$TAG_TEMPLATE" TAG "$(html_escape "$tag")")"$'\n'
+    done < <(printf '%s' "$tags_json" | jq -r '.[]')
+    render "$TAGS_TEMPLATE" TAGS "$items"
+}
+
 render() {
     local template="$1" file
     file="$(cat "$template")"
@@ -45,7 +58,7 @@ render() {
 }
 
 emit_card() {
-    local name="$1" title="$2" topic="$3" header="$4" subtitle="$5" extra_class="$6"
+    local name="$1" title="$2" topic="$3" header="$4" subtitle="$5" extra_class="$6" tags="${7:-[]}"
     local key grad card_class
     key="${topic:-$title}"
     grad="$(pick_gradient_class "$key")"
@@ -56,6 +69,7 @@ emit_card() {
     render "$CARD_TEMPLATE" \
         CARD_CLASS "$card_class" \
         CARD_NAME "$(html_escape "$name")" \
+        CARD_TAGS "$(build_tags "$tags")" \
         CARD_EXTRA "$(html_escape "$header")" \
         CARD_TITLE "$(html_escape "$title")" \
         CARD_SUBTITLE "$(html_escape "$subtitle")"
@@ -74,7 +88,8 @@ trap 'rm -f "$CONTENT_FILE"' EXIT
         f_topic="$(printf '%s' "$featured" | jq -r '.topic // ""')"
         f_header="$(printf '%s' "$featured" | jq -r '.header // ""')"
         f_subtitle="$(printf '%s' "$featured" | jq -r '.subtitle // ""')"
-        render "$FEATURED_TEMPLATE" FEATURED_CARD "$(emit_card "$f_name" "$f_title" "$f_topic" "$f_header" "$f_subtitle" "blog-card-featured")"
+        f_tags="$(printf '%s' "$featured" | jq -c '.tags // []')"
+        render "$FEATURED_TEMPLATE" FEATURED_CARD "$(emit_card "$f_name" "$f_title" "$f_topic" "$f_header" "$f_subtitle" "blog-card-featured" "$f_tags")"
     fi
 
     cards=""
@@ -85,9 +100,10 @@ trap 'rm -f "$CONTENT_FILE"' EXIT
         topic="$(printf '%s' "$entry" | jq -r '.topic // ""')"
         header="$(printf '%s' "$entry" | jq -r '.header // ""')"
         subtitle="$(printf '%s' "$entry" | jq -r '.subtitle // ""')"
+        tags="$(printf '%s' "$entry" | jq -c '.tags // []')"
         extra_class=""
         [ "$i" -ge "$VISIBLE_COUNT" ] && extra_class="blog-card-hidden"
-        cards+="$(emit_card "$name" "$title" "$topic" "$header" "$subtitle" "$extra_class")"$'\n'
+        cards+="$(emit_card "$name" "$title" "$topic" "$header" "$subtitle" "$extra_class" "$tags")"$'\n'
         i=$((i + 1))
     done < <(jq -c 'sort_by(.created) | reverse | .[]' "$INDEX")
 

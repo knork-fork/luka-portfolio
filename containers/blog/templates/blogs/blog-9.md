@@ -3,7 +3,7 @@ header: Frontend
 title: Rethinking how I use CSS grid
 subtitle: Layouts got simpler once I stopped fighting the spec.
 is_featured: false
-tags: []
+tags: ["CSS", "Frontend"]
 topic: null
 thumbnail: null
 embed_text: null

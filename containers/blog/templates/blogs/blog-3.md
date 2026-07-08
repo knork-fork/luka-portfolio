@@ -3,7 +3,7 @@ header: Design notes
 title: Building a design system from scratch
 subtitle: Lessons learned setting up tokens, components and documentation.
 is_featured: false
-tags: []
+tags: ["Design", "CSS", "Components"]
 topic: null
 thumbnail: null
 embed_text: null

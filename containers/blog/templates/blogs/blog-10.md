@@ -3,7 +3,7 @@ header: Databases
 title: Indexing for people in a hurry
 subtitle: A gentle mental model for when an index actually helps.
 is_featured: false
-tags: []
+tags: ["Databases", "SQL"]
 topic: null
 thumbnail: null
 embed_text: null

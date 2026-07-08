@@ -828,6 +828,25 @@ a:hover {
   background: linear-gradient(135deg, #1d0b52 0%, #4f1fb4 55%, #9040e8 100%);
 }
 
+.blog-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 0.6rem;
+  padding: 0;
+  list-style: none;
+}
+
+.blog-card-tag {
+  padding: 0.12rem 0.4rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.68);
+}
+
 .blog-card-extra {
   font-size: 0.72rem;
   font-weight: 600;
