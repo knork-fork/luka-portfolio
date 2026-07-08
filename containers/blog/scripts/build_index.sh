@@ -2,8 +2,32 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-BLOGS_DIR="$SCRIPT_DIR/../templates/blogs"
-INDEX="$SCRIPT_DIR/../index.json"
+BLOG_DIR="$SCRIPT_DIR/.."
+BLOGS_DIR="$BLOG_DIR/templates/blogs"
+INDEX="$BLOG_DIR/index.json"
+
+# Dates come from git history, not the filesystem. Git preserves no
+# birth/mtime, so a clone, checkout, or regeneration resets those to "now" —
+# which both scrambles the post ordering and churns created/modified in
+# index.json on every build. Git's commit dates are stable and only advance
+# when a post's content actually changes. Fall back to filesystem times for
+# files not yet committed.
+created_epoch_of() {
+    local file="$1" epoch
+    epoch="$(git -C "$BLOG_DIR" log --diff-filter=A --follow --format='%ct' -- "$file" 2>/dev/null | tail -1)"
+    if [ -z "$epoch" ]; then
+        epoch="$(stat -c '%W' "$file")"
+        [ "$epoch" -eq 0 ] && epoch="$(stat -c '%Z' "$file")"
+    fi
+    printf '%s' "$epoch"
+}
+
+modified_epoch_of() {
+    local file="$1" epoch
+    epoch="$(git -C "$BLOG_DIR" log -1 --format='%ct' -- "$file" 2>/dev/null || true)"
+    [ -z "$epoch" ] && epoch="$(stat -c '%Y' "$file")"
+    printf '%s' "$epoch"
+}
 
 if [ -d "$BLOGS_DIR" ] && [ -z "$(find "$BLOGS_DIR" -maxdepth 1 -mindepth 1 -name '*.md' -not -name '.gitkeep')" ]; then
     exit 0
@@ -34,7 +58,7 @@ meta_value() {
 
 entries="[]"
 
-while IFS=$'\t' read -r birth file; do
+while IFS=$'\t' read -r created_epoch file; do
     name=$(basename "$file" .md)
     header=$(meta_value "$file" header)
     title=$(meta_value "$file" title)
@@ -51,9 +75,8 @@ while IFS=$'\t' read -r birth file; do
     [ -z "$topic" ] && topic=null
     [ -z "$thumbnail" ] && thumbnail=null
 
-    mtime=$(stat -c "%Y" "$file")
-    created=$(date -d "@$birth" --iso-8601=seconds)
-    modified=$(date -d "@$mtime" --iso-8601=seconds)
+    created=$(date -d "@$created_epoch" --iso-8601=seconds)
+    modified=$(date -d "@$(modified_epoch_of "$file")" --iso-8601=seconds)
 
     entry=$(jq -n \
         --arg name "$name" \
@@ -72,10 +95,8 @@ while IFS=$'\t' read -r birth file; do
 done < <(
     find "$BLOGS_DIR" -maxdepth 1 -mindepth 1 -name '*.md' -not -name '.gitkeep' -print0 |
         while IFS= read -r -d '' f; do
-            birth=$(stat -c "%W" "$f")
-            [ "$birth" -eq 0 ] && birth=$(stat -c "%Z" "$f")
-            printf '%s\t%s\n' "$birth" "$f"
-        done | sort -n
+            printf '%s\t%s\n' "$(created_epoch_of "$f")" "$f"
+        done | sort -t"$(printf '\t')" -k1,1n -k2,2V
 )
 
 printf '%s\n' "$entries" | jq -r '

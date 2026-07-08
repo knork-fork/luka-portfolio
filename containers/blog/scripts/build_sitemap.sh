@@ -8,15 +8,24 @@ SITEMAP="$BLOG_DIR/sitemap.xml"
 
 BASE_URL="https://luka-knezic.com"
 
-# Emit the file's creation (birth) time as a W3C datetime, falling back to the
-# modification time when the filesystem does not record a birth time.
-lastmod_of() {
+# Emit the epoch of the file's last content change as recorded by git.
+#
+# Filesystem timestamps (birth/mtime) are unusable here: git does not preserve
+# them, so a clone, checkout, or any regeneration of the file resets them to
+# "now" and the sitemap's lastmod is bumped on every build even when nothing
+# changed. Git's last-commit date is stable and only advances when the post's
+# content actually changes. Fall back to mtime for files not yet committed.
+lastmod_epoch_of() {
     local file="$1" epoch
-    epoch="$(stat --format='%W' "$file")"
-    if [ "$epoch" = "0" ] || [ "$epoch" = "-" ]; then
+    epoch="$(git -C "$BLOG_DIR" log -1 --format='%ct' -- "$file" 2>/dev/null || true)"
+    if [ -z "$epoch" ]; then
         epoch="$(stat --format='%Y' "$file")"
     fi
-    date -d "@$epoch" +%Y-%m-%dT%H:%M:%S%:z
+    printf '%s' "$epoch"
+}
+
+lastmod_of() {
+    date -d "@$(lastmod_epoch_of "$1")" +%Y-%m-%dT%H:%M:%S%:z
 }
 
 xml_escape() {
@@ -43,8 +52,7 @@ emit_url() {
     # listing page's freshness tracks its newest entry.
     newest_epoch=0
     while IFS= read -r -d '' file; do
-        epoch="$(stat --format='%W' "$file")"
-        { [ "$epoch" = "0" ] || [ "$epoch" = "-" ]; } && epoch="$(stat --format='%Y' "$file")"
+        epoch="$(lastmod_epoch_of "$file")"
         [ "$epoch" -gt "$newest_epoch" ] && newest_epoch="$epoch"
     done < <(find "$BLOGS_DIR" -maxdepth 1 -mindepth 1 -name '*.md' -print0)
 
