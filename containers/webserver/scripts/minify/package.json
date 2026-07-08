@@ -1,0 +1,9 @@
+{
+  "name": "portfolio-minify",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Minifies JS and CSS assets with esbuild during the webserver build",
+  "dependencies": {
+    "esbuild": "0.20.2"
+  }
+}
