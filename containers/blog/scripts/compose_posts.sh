@@ -20,6 +20,15 @@ if ! "$SCRIPT_DIR/validate_index.sh"; then
     awk 'FNR==NR { content=content $0 "\n"; next }
          /<main><\/main>/ { printf "%s", content; next }
          { print }' "$NO_BLOGS" "$BASE" > "$OUTPUT"
+    # Fill base.html's SEO placeholders with the generic blog defaults.
+    sed -i \
+        -e 's|__META_DESCRIPTION__|Notes and write-ups on backend systems, software architecture, and engineering experiments by Luka Knežić.|' \
+        -e 's|__OG_DESCRIPTION__|Notes and write-ups on backend systems, software architecture, and engineering experiments.|' \
+        -e 's|__OG_TITLE__|Blog — Luka Knežić|' \
+        -e 's|__OG_URL__|https://luka-knezic.com/blog/|' \
+        -e 's|__TWITTER_TITLE__|Blog — Luka Knežić|' \
+        -e 's|__TWITTER_DESCRIPTION__|Notes and write-ups on backend systems, software architecture, and engineering experiments.|' \
+        "$OUTPUT"
     echo "No blogs found. Generated index.html with no blogs message."
     exit 0
 fi

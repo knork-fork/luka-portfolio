@@ -120,4 +120,15 @@ awk 'FNR==NR { content=content $0 ORS; next }
      /<main><\/main>/ { printf "%s", content; next }
      { print }' "$CONTENT_FILE" "$BASE" > "$OUTPUT"
 
+# The listing page is not a single post, so fill base.html's SEO placeholders
+# with the generic blog defaults (delimiter "|" since the URL contains slashes).
+sed -i \
+    -e 's|__META_DESCRIPTION__|Notes and write-ups on backend systems, software architecture, and engineering experiments by Luka Knežić.|' \
+    -e 's|__OG_DESCRIPTION__|Notes and write-ups on backend systems, software architecture, and engineering experiments.|' \
+    -e 's|__OG_TITLE__|Blog — Luka Knežić|' \
+    -e 's|__OG_URL__|https://luka-knezic.com/blog/|' \
+    -e 's|__TWITTER_TITLE__|Blog — Luka Knežić|' \
+    -e 's|__TWITTER_DESCRIPTION__|Notes and write-ups on backend systems, software architecture, and engineering experiments.|' \
+    "$OUTPUT"
+
 echo "Blog index page built successfully."
