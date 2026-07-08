@@ -8,6 +8,8 @@ STYLES_DIR="$BASE_DIR/files/styles"
 JS_DIR="$BASE_DIR/files/js"
 PAGES_DIR="$BASE_DIR/pages"
 BLOG_TEMPLATES_DIR="$SCRIPT_DIR/../../blog/templates/components"
+BLOG_PAGES_DIR="$SCRIPT_DIR/../../blog/static/pages"
+BLOG_POSTS_DIR="$SCRIPT_DIR/../../blog/static/posts"
 
 # Empty dist folder
 rm -rf "$DIST_DIR"
@@ -30,6 +32,8 @@ done
 # Find all HTML files
 HTML_SEARCH_DIRS=("$PAGES_DIR")
 [ -d "$BLOG_TEMPLATES_DIR" ] && HTML_SEARCH_DIRS+=("$BLOG_TEMPLATES_DIR")
+[ -d "$BLOG_PAGES_DIR" ] && HTML_SEARCH_DIRS+=("$BLOG_PAGES_DIR")
+[ -d "$BLOG_POSTS_DIR" ] && HTML_SEARCH_DIRS+=("$BLOG_POSTS_DIR")
 find "${HTML_SEARCH_DIRS[@]}" -name '*.html' | while read -r file; do
     # Replace style.css with the hashed version
     sed -i "s|href=\"[^\"]*\" data-build=\"style.css\"|href=\"/static/dist/style.${STYLE_HASH}.css\" data-build=\"style.css\"|g" "$file"
