@@ -24,7 +24,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
   <link rel="icon" type="image/x-icon" href="/static/favicon/favicon.ico">
-  <link rel="stylesheet" href="/static/dist/style.0c3a7a21.css" data-build="style.css">
+  <link rel="stylesheet" href="/static/dist/style.05ef125d.css" data-build="style.css">
 </head>
 <body>
 
@@ -37,22 +37,25 @@
     </ul>
   </nav>
 
-<main class="page post">
-  <a class="post-back" href="/blog">&larr; Back to Blog</a>
-  <header class="post-header">
-    <div class="post-meta">
-      <ul class="post-tags">
-        <li><a class="post-tag" href="/blog?tags=design">Design</a></li>
-        <li><a class="post-tag" href="/blog?tags=css">CSS</a></li>
-        <li><a class="post-tag" href="/blog?tags=components">Components</a></li>
-      </ul>
-      <time class="post-date" datetime="2026-07-08">Updated Jul 8, 2026</time>
+<main class="post">
+  <header class="post-header blog-card-grad-0">
+    <div class="post-header-inner">
+      <a class="post-back" href="/blog">&larr; Back to Blog</a>
+      <div class="post-meta">
+        <ul class="post-tags">
+          <li><a class="post-tag" href="/blog?tags=design">Design</a></li>
+          <li><a class="post-tag" href="/blog?tags=css">CSS</a></li>
+          <li><a class="post-tag" href="/blog?tags=components">Components</a></li>
+        </ul>
+        <time class="post-date" datetime="2026-07-08">Updated Jul 8, 2026</time>
+      </div>
+      <h1 class="post-title">Building a design system from scratch</h1>
+      <p class="post-lead">Lessons learned setting up tokens, components and documentation.</p>
     </div>
-    <h1 class="post-title">Building a design system from scratch</h1>
-    <p class="post-lead">Lessons learned setting up tokens, components and documentation.</p>
   </header>
-  <article class="post-card">
-    <div class="post-content">
+  <div class="post-body">
+    <article class="post-card">
+      <div class="post-content">
 <p>A design system for a one-person project sounds like overkill. It isn’t. Even a <em>tiny</em>
 set of tokens keeps every page feeling like the same website.</p>
 <h2>Start with tokens, not components</h2>
@@ -102,8 +105,9 @@ set of tokens keeps every page feeling like the same website.</p>
 <li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> Dark theme</li>
 </ul>
 <p>Ship the tokens first; the components fall out of them.</p>
-    </div>
-  </article>
+      </div>
+    </article>
+  </div>
 </main>
 
   <footer class="footer">

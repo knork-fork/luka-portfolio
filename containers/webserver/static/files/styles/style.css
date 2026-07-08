@@ -898,10 +898,13 @@ a:hover {
   z-index: 1;
 }
 
-/* Band layers: crisp-edged near the top of the card (::before), cross-fading
-   into a blurred, dissipating copy toward the bottom (::after) */
+/* Band layers: crisp-edged near the top (::before), cross-fading into a
+   blurred, dissipating copy toward the bottom (::after). Shared by the blog
+   cards and the full-width article header so they use the same facet effect. */
 .blog-card::before,
-.blog-card::after {
+.blog-card::after,
+.post-header::before,
+.post-header::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -909,13 +912,15 @@ a:hover {
   pointer-events: none;
 }
 
-.blog-card::before {
+.blog-card::before,
+.post-header::before {
   -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.9) 40%, rgba(0, 0, 0, 0) 95%);
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.9) 40%, rgba(0, 0, 0, 0) 95%);
 }
 
-.blog-card::after {
-  inset: -24px; /* pull edges outside the card so the blur doesn't bleed transparent borders in */
+.blog-card::after,
+.post-header::after {
+  inset: -24px; /* pull edges outside the box so the blur doesn't bleed transparent borders in */
   filter: blur(14px);
   -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.5) 70%, rgba(0, 0, 0, 0.3) 100%);
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.5) 70%, rgba(0, 0, 0, 0.3) 100%);
@@ -1157,6 +1162,14 @@ a:hover {
     padding: 1.25rem 1.25rem;
   }
 
+  .post-header-inner {
+    padding: 2rem 1.35rem 2.25rem;
+  }
+
+  .post-body {
+    padding: 0 1.35rem 3rem;
+  }
+
   .post-card {
     padding: 1.25rem 1.35rem 1.75rem;
   }
@@ -1169,24 +1182,45 @@ a:hover {
 /* --- Blog post article page --- */
 
 /* Back-to-blog link sits above the whole article */
+/* Full-width gradient article header. The <main> is full-bleed on this page so
+   the header spans edge-to-edge like the navbar; its gradient + facet streaks
+   are the same effect as the matching blog card (post's gradient class + the
+   shared ::before/::after streak layers above). Inner content is constrained
+   to the page measure. */
+.post-header {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+  color: #ffffff;
+}
+
+/* Constrain header content to the page measure and keep it above the streaks */
+.post-header-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 2.75rem;
+}
+
+/* Body column below the header, constrained like the old .page wrapper */
+.post-body {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
 .post-back {
   display: inline-block;
-  margin-bottom: 1.25rem;
-  color: var(--color-text-tertiary);
+  margin-bottom: 1.5rem;
+  color: rgba(255, 255, 255, 0.75);
   font-size: 0.85rem;
   text-decoration: none;
   transition: color 0.15s;
 }
 
 .post-back:hover {
-  color: var(--color-text-secondary);
-}
-
-/* Standalone article header: metadata + title + lead. Sits on the page
-   background and is separated from the white content card below by spacing
-   and a hairline, so the two areas read as clearly distinct sections. */
-.post-header {
-  margin-bottom: 1.25rem;
+  color: #ffffff;
 }
 
 /* Whiter content area for the rendered Markdown (footer stays outside). Kept
@@ -1216,35 +1250,37 @@ a:hover {
   list-style: none;
 }
 
-/* Subtle clickable pills — quieter than the on-card blog tags */
+/* Clickable pills — translucent white to read on the gradient, echoing the
+   on-card blog tags */
 .post-tag {
   display: inline-block;
   padding: 0.15rem 0.55rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 999px;
-  background: var(--color-bg);
-  color: var(--color-text-secondary);
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.02em;
   text-decoration: none;
-  transition: color 0.15s, border-color 0.15s;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
 }
 
 .post-tag:hover {
-  color: var(--color-text);
-  border-color: var(--color-text-tertiary);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .post-date {
-  color: var(--color-text-tertiary);
+  color: rgba(255, 255, 255, 0.7);
   font-size: 0.78rem;
 }
 
 /* Prominent, large article title (the page's single h1) */
 .post-title {
   margin: 0;
-  color: var(--color-text);
+  color: #ffffff;
   font-size: 2.6rem;
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -1255,7 +1291,7 @@ a:hover {
 .post-lead {
   max-width: 68ch;
   margin: 1rem 0 0;
-  color: var(--color-text-secondary);
+  color: rgba(255, 255, 255, 0.85);
   font-size: 1.1rem;
   line-height: 1.6;
 }

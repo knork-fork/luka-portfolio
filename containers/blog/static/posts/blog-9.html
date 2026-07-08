@@ -24,7 +24,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
   <link rel="icon" type="image/x-icon" href="/static/favicon/favicon.ico">
-  <link rel="stylesheet" href="/static/dist/style.0c3a7a21.css" data-build="style.css">
+  <link rel="stylesheet" href="/static/dist/style.05ef125d.css" data-build="style.css">
 </head>
 <body>
 
@@ -37,21 +37,24 @@
     </ul>
   </nav>
 
-<main class="page post">
-  <a class="post-back" href="/blog">&larr; Back to Blog</a>
-  <header class="post-header">
-    <div class="post-meta">
-      <ul class="post-tags">
-        <li><a class="post-tag" href="/blog?tags=css">CSS</a></li>
-        <li><a class="post-tag" href="/blog?tags=frontend">Frontend</a></li>
-      </ul>
-      <time class="post-date" datetime="2026-07-08">Updated Jul 8, 2026</time>
+<main class="post">
+  <header class="post-header blog-card-grad-1">
+    <div class="post-header-inner">
+      <a class="post-back" href="/blog">&larr; Back to Blog</a>
+      <div class="post-meta">
+        <ul class="post-tags">
+          <li><a class="post-tag" href="/blog?tags=css">CSS</a></li>
+          <li><a class="post-tag" href="/blog?tags=frontend">Frontend</a></li>
+        </ul>
+        <time class="post-date" datetime="2026-07-08">Updated Jul 8, 2026</time>
+      </div>
+      <h1 class="post-title">Rethinking how I use CSS grid</h1>
+      <p class="post-lead">Layouts got simpler once I stopped fighting the spec.</p>
     </div>
-    <h1 class="post-title">Rethinking how I use CSS grid</h1>
-    <p class="post-lead">Layouts got simpler once I stopped fighting the spec.</p>
   </header>
-  <article class="post-card">
-    <div class="post-content">
+  <div class="post-body">
+    <article class="post-card">
+      <div class="post-content">
 <p>I spent years bolting flexbox onto layouts that wanted to be grids. Once I let grid do
 what it is good at, a lot of my CSS simply disappeared.</p>
 <h2>Before: fighting the layout</h2>
@@ -77,8 +80,9 @@ what it is good at, a lot of my CSS simply disappeared.</p>
 </code></pre>
 
 <p>No media queries, no <code>calc()</code>, no margins fighting the gap. The grid reflows itself.</p>
-    </div>
-  </article>
+      </div>
+    </article>
+  </div>
 </main>
 
   <footer class="footer">

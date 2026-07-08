@@ -105,7 +105,7 @@ while IFS= read -r -d '' file; do
         [ -n "$tag" ] || continue
         # Slug must match blog.js slugify() so /blog?tags=<slug> pre-selects it.
         tag_slug="$(printf '%s' "$tag" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')"
-        tags_html+="        <li><a class=\"post-tag\" href=\"/blog?tags=$(html_escape "$tag_slug")\">$(html_escape "$tag")</a></li>"$'\n'
+        tags_html+="          <li><a class=\"post-tag\" href=\"/blog?tags=$(html_escape "$tag_slug")\">$(html_escape "$tag")</a></li>"$'\n'
     done < <(printf '%s' "$(meta_value "$file" tags)" | jq -r '.[]? // empty' 2>/dev/null || true)
 
     date_html=""
@@ -113,8 +113,12 @@ while IFS= read -r -d '' file; do
     if [ -n "$iso_modified" ]; then
         human_date="$(date -d "$iso_modified" '+%b %-d, %Y' 2>/dev/null || true)"
         [ -n "$human_date" ] && \
-            date_html="      <time class=\"post-date\" datetime=\"${iso_modified%%T*}\">Updated $human_date</time>"$'\n'
+            date_html="        <time class=\"post-date\" datetime=\"${iso_modified%%T*}\">Updated $human_date</time>"$'\n'
     fi
+
+    # Gradient class (same as this post's blog card) for the full-width header.
+    gradient="$(jq -r --arg n "$stem" '.[] | select(.name == $n) | .gradient // empty' "$INDEX" 2>/dev/null || true)"
+    [ -z "$gradient" ] && gradient="blog-card-grad-0"
 
     # <meta name="description"> uses seo_description, else the base.html default
     meta_description="$DEFAULT_META_DESCRIPTION"
@@ -145,35 +149,40 @@ while IFS= read -r -d '' file; do
     # card below it. Built into a file (not passed via awk -v) so backslashes
     # and "&" in real content are preserved verbatim.
     {
-        printf '  <a class="post-back" href="/blog">&larr; Back to Blog</a>\n'
-        printf '  <header class="post-header">\n'
+        printf '  <header class="post-header %s">\n' "$gradient"
+        printf '    <div class="post-header-inner">\n'
+        printf '      <a class="post-back" href="/blog">&larr; Back to Blog</a>\n'
         if [ -n "$tags_html" ] || [ -n "$date_html" ]; then
-            printf '    <div class="post-meta">\n'
+            printf '      <div class="post-meta">\n'
             if [ -n "$tags_html" ]; then
-                printf '      <ul class="post-tags">\n'
+                printf '        <ul class="post-tags">\n'
                 printf '%s' "$tags_html"
-                printf '      </ul>\n'
+                printf '        </ul>\n'
             fi
             [ -n "$date_html" ] && printf '%s' "$date_html"
-            printf '    </div>\n'
+            printf '      </div>\n'
         fi
-        printf '    <h1 class="post-title">%s</h1>\n' "$(html_escape "$title")"
+        printf '      <h1 class="post-title">%s</h1>\n' "$(html_escape "$title")"
         if [ -n "$subtitle" ] && [ "$subtitle" != "null" ]; then
-            printf '    <p class="post-lead">%s</p>\n' "$(html_escape "$subtitle")"
+            printf '      <p class="post-lead">%s</p>\n' "$(html_escape "$subtitle")"
         fi
-        printf '  </header>\n'
-        printf '  <article class="post-card">\n'
-        printf '    <div class="post-content">\n'
-        cat "$WORK/out/$stem.html"
         printf '    </div>\n'
-        printf '  </article>\n'
+        printf '  </header>\n'
+        printf '  <div class="post-body">\n'
+        printf '    <article class="post-card">\n'
+        printf '      <div class="post-content">\n'
+        cat "$WORK/out/$stem.html"
+        printf '      </div>\n'
+        printf '    </article>\n'
+        printf '  </div>\n'
     } > "$WORK/main/$stem.html"
 
-    # Inject the assembled article into base.html's empty <main></main>; mirrors
-    # the FNR==NR merge in compose_posts.sh.
+    # Inject the assembled article into base.html's empty <main></main>. The
+    # <main> is full-bleed (no .page max-width) so the gradient header can span
+    # the full page width; inner wrappers re-constrain the content.
     printf '%s\n' "$page" > "$WORK/page.html"
     awk 'FNR==NR { c = c $0 ORS; next }
-         /<main><\/main>/ { printf "<main class=\"page post\">\n%s</main>\n", c; next }
+         /<main><\/main>/ { printf "<main class=\"post\">\n%s</main>\n", c; next }
          { print }' "$WORK/main/$stem.html" "$WORK/page.html" > "$out"
 done < <(find "$BLOGS_DIR" -maxdepth 1 -mindepth 1 -name '*.md' -print0)
 
