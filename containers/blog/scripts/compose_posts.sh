@@ -35,3 +35,9 @@ if ! "$SCRIPT_DIR/convert_markdown_to_html.sh"; then
     echo "Error: failed to convert markdown to HTML." >&2
     exit 1
 fi
+
+# Regenerate the sitemap from the current set of blog posts
+if ! "$SCRIPT_DIR/build_sitemap.sh"; then
+    echo "Error: failed to build sitemap." >&2
+    exit 1
+fi
