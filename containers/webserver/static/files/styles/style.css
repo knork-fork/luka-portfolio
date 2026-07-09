@@ -1232,6 +1232,15 @@ a:hover {
   padding: 1.25rem 2rem 2rem;
 }
 
+/* Roomier post padding on wider screens; placed after the base rule so it
+   wins the cascade. Mobile keeps the modest base padding so 8rem sides don't
+   crush the content column. */
+@media (min-width: 1110px) {
+  .post-card {
+    padding: 2rem 8rem 8rem;
+  }
+}
+
 /* Quiet metadata row above the title: tags + last-modified date */
 .post-meta {
   display: flex;
