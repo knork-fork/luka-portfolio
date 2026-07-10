@@ -137,7 +137,7 @@
       if (q) {
         var hay = [
           post.title,
-          post.header,
+          post.card_label,
           post.subtitle,
           (post.tags || []).join(" "),
         ]
@@ -170,10 +170,10 @@
       a.appendChild(ul);
     }
 
-    var extra = document.createElement("span");
-    extra.className = "blog-card-extra";
-    extra.textContent = post.header || "";
-    a.appendChild(extra);
+    var label = document.createElement("span");
+    label.className = "blog-card-label";
+    label.textContent = post.card_label || "";
+    a.appendChild(label);
 
     var title = document.createElement("h3");
     title.className = "blog-card-title";

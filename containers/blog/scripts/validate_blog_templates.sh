@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 BLOGS="$SCRIPT_DIR/../templates/blogs"
 
 # Keys that every blog's "### metadata" block must contain (see templates/blogs/blog-1.md)
-REQUIRED_META_KEYS=(header title subtitle seo_description embed_text is_featured tags topic thumbnail)
+REQUIRED_META_KEYS=(card_label title subtitle seo_description embed_text is_featured tags topic thumbnail)
 
 if [ -d "$BLOGS" ] && [ -z "$(find "$BLOGS" -maxdepth 1 -mindepth 1 -not -name '.gitkeep')" ]; then
     # No blog templates found, early return

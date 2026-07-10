@@ -1,5 +1,5 @@
 ### metadata
-header: Introduction
+card_label: Introduction
 title: Why would I start a blog?
 subtitle: Or, how to get yourself out there
 seo_description: A first post about writing, static blogs, SEO, and keeping a human voice in the age of AI slop.

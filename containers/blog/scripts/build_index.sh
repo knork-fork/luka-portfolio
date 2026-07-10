@@ -72,7 +72,7 @@ entries="[]"
 
 while IFS=$'\t' read -r created_epoch file; do
     name=$(basename "$file" .md)
-    header=$(meta_value "$file" header)
+    card_label=$(meta_value "$file" card_label)
     title=$(meta_value "$file" title)
     subtitle=$(meta_value "$file" subtitle)
     is_featured=$(meta_value "$file" is_featured)
@@ -98,7 +98,7 @@ while IFS=$'\t' read -r created_epoch file; do
     entry=$(jq -n \
         --arg name "$name" \
         --arg title "$title" \
-        --arg header "$header" \
+        --arg card_label "$card_label" \
         --arg subtitle "$subtitle" \
         --arg created "$created" \
         --arg modified "$modified" \
@@ -107,7 +107,7 @@ while IFS=$'\t' read -r created_epoch file; do
         --argjson tags "$tags" \
         --argjson topic "$topic" \
         --argjson thumbnail "$thumbnail" \
-        '{name: $name, title: $title, created: $created, modified: $modified, tags: $tags, topic: $topic, thumbnail: $thumbnail, is_featured: $is_featured, header: $header, subtitle: $subtitle, gradient: $gradient}')
+        '{name: $name, title: $title, created: $created, modified: $modified, tags: $tags, topic: $topic, thumbnail: $thumbnail, is_featured: $is_featured, card_label: $card_label, subtitle: $subtitle, gradient: $gradient}')
 
     entries=$(jq -n --argjson arr "$entries" --argjson entry "$entry" '$arr + [$entry]')
 done < <(
