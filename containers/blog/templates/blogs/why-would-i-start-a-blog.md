@@ -1,13 +1,21 @@
 ### metadata
-card_label: Introduction
 title: Why would I start a blog?
 subtitle: Or, how to get yourself out there
+card_label: Introduction
+
 seo_description: A first post about writing, static blogs, SEO, and keeping a human voice in the age of AI slop.
+embed_text: Why this blog exists, how it was built, and why writing still feels worth doing.
+
+is_published: true
 is_featured: true
+
 tags: ["Meta"]
 topic: null
+
 thumbnail: null
-embed_text: Why this blog exists, how it was built, and why writing still feels worth doing.
+
+created_at: 2026-07-09T00:05:22+02:00
+modified_at: null
 ### metadata
 
 ## Why

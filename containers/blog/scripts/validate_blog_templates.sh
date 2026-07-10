@@ -5,7 +5,10 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 BLOGS="$SCRIPT_DIR/../templates/blogs"
 
 # Keys that every blog's "### metadata" block must contain (see templates/blogs/blog-1.md)
-REQUIRED_META_KEYS=(card_label title subtitle seo_description embed_text is_featured tags topic thumbnail)
+REQUIRED_META_KEYS=(card_label title subtitle seo_description embed_text is_published is_featured tags topic thumbnail created_at modified_at)
+
+# RFC 3339 timestamp shape, e.g. "2026-07-08T22:57:57+02:00"
+TIMESTAMP_RE='^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}[+-][0-9]{2}:[0-9]{2}$'
 
 if [ -d "$BLOGS" ] && [ -z "$(find "$BLOGS" -maxdepth 1 -mindepth 1 -not -name '.gitkeep')" ]; then
     # No blog templates found, early return
@@ -37,6 +40,37 @@ validate_metadata() {
             rc=1
         fi
     done
+
+    # Read a metadata value by key (first match), trimming surrounding whitespace
+    meta_value() {
+        printf '%s\n' "$block" | sed -n "s/^$1:[[:space:]]*//p" | head -n1
+    }
+
+    local is_published created_at modified_at
+    is_published="$(meta_value is_published)"
+    created_at="$(meta_value created_at)"
+    modified_at="$(meta_value modified_at)"
+
+    # is_published must be exactly true or false
+    if [ "$is_published" != "true" ] && [ "$is_published" != "false" ]; then
+        echo "Error: '$name' metadata 'is_published' must be 'true' or 'false' (got '$is_published')" >&2
+        rc=1
+    fi
+
+    # created_at must never be null and must match the timestamp shape
+    if [ "$created_at" = "null" ] || [ -z "$created_at" ]; then
+        echo "Error: '$name' metadata 'created_at' must not be null" >&2
+        rc=1
+    elif [[ ! "$created_at" =~ $TIMESTAMP_RE ]]; then
+        echo "Error: '$name' metadata 'created_at' must be a timestamp like '2026-07-08T22:57:57+02:00' (got '$created_at')" >&2
+        rc=1
+    fi
+
+    # modified_at may be null; otherwise it must match the timestamp shape
+    if [ "$modified_at" != "null" ] && [[ ! "$modified_at" =~ $TIMESTAMP_RE ]]; then
+        echo "Error: '$name' metadata 'modified_at' must be null or a timestamp like '2026-07-08T22:57:57+02:00' (got '$modified_at')" >&2
+        rc=1
+    fi
 
     return "$rc"
 }
