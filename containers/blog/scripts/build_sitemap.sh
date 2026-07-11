@@ -28,6 +28,25 @@ lastmod_of() {
     date -d "@$(lastmod_epoch_of "$1")" +%Y-%m-%dT%H:%M:%S%:z
 }
 
+# Read a single key's value from a blog's "### metadata ... ### metadata" block
+meta_value() {
+    local file="$1" key="$2"
+    awk -v key="$key" '
+        NR==1 && $0=="### metadata" { inblock=1; next }
+        inblock && $0=="### metadata" { exit }
+        inblock {
+            idx = index($0, ":")
+            if (idx > 0) {
+                k = substr($0, 1, idx-1)
+                v = substr($0, idx+1)
+                gsub(/^[ \t]+|[ \t]+$/, "", k)
+                gsub(/^[ \t]+|[ \t]+$/, "", v)
+                if (k == key) { print v; exit }
+            }
+        }
+    ' "$file"
+}
+
 xml_escape() {
     local s="$1"
     s="${s//&/&amp;}"
@@ -52,6 +71,7 @@ emit_url() {
     # listing page's freshness tracks its newest entry.
     newest_epoch=0
     while IFS= read -r -d '' file; do
+        [ "$(meta_value "$file" is_published)" = "true" ] || continue
         epoch="$(lastmod_epoch_of "$file")"
         [ "$epoch" -gt "$newest_epoch" ] && newest_epoch="$epoch"
     done < <(find "$BLOGS_DIR" -maxdepth 1 -mindepth 1 -name '*.md' -print0)
@@ -62,6 +82,7 @@ emit_url() {
 
     # One entry per blog post, sorted by slug for stable output.
     while IFS= read -r -d '' file; do
+        [ "$(meta_value "$file" is_published)" = "true" ] || continue
         name="$(basename "$file")"
         stem="${name%.md}"
         emit_url "$BASE_URL/blog/$stem" "$(lastmod_of "$file")"

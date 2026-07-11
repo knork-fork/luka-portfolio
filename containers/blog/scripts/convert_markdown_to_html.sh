@@ -69,6 +69,8 @@ apply() {
 # because the title is rendered in the standalone article header instead (from
 # the post's metadata), so keeping it here would duplicate the title.
 while IFS= read -r -d '' file; do
+    # Skip unpublished posts: don't render their bodies or build their pages.
+    [ "$(meta_value "$file" is_published)" = "true" ] || continue
     stem="$(basename "$file" .md)"
     awk '
         /^### metadata$/ { seen++; next }
@@ -87,6 +89,7 @@ docker run --rm -v "$WORK:/data" "$MD_IMAGE" /data/in /data/out
 
 # Pass 2: fill each post's SEO placeholders and inject its rendered body.
 while IFS= read -r -d '' file; do
+    [ "$(meta_value "$file" is_published)" = "true" ] || continue
     name="$(basename "$file")"
     stem="${name%.md}"
     out="$OUTPUT_DIR/$stem.html"

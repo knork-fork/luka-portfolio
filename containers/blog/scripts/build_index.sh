@@ -72,6 +72,9 @@ entries="[]"
 
 while IFS=$'\t' read -r created_epoch file; do
     name=$(basename "$file" .md)
+    # Skip unpublished posts; they must not appear in index.json (validation
+    # guarantees is_published is exactly "true"/"false", so a plain compare is safe).
+    [ "$(meta_value "$file" is_published)" = "true" ] || continue
     card_label=$(meta_value "$file" card_label)
     title=$(meta_value "$file" title)
     subtitle=$(meta_value "$file" subtitle)

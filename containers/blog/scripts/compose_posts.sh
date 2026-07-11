@@ -31,6 +31,9 @@ if ! "$SCRIPT_DIR/validate_index.sh"; then
         -e 's|__TWITTER_DESCRIPTION__|Notes and write-ups on backend systems, software architecture, and engineering experiments.|' \
         "$OUTPUT"
     echo "No blogs found. Generated index.html with no blogs message."
+    # No publishable posts, prune any leftover per-post pages and sitemap
+    "$SCRIPT_DIR/prune_orphan_post_pages.sh"
+    "$SCRIPT_DIR/build_sitemap.sh"
     exit 0
 fi
 
@@ -43,6 +46,12 @@ fi
 # Build individual blog post pages
 if ! "$SCRIPT_DIR/convert_markdown_to_html.sh"; then
     echo "Error: failed to convert markdown to HTML." >&2
+    exit 1
+fi
+
+# Remove per-post pages whose source markdown was deleted or unpublished.
+if ! "$SCRIPT_DIR/prune_orphan_post_pages.sh"; then
+    echo "Error: failed to prune orphan post pages." >&2
     exit 1
 fi
 
