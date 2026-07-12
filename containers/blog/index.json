@@ -1,3 +1,4 @@
 [
-  {"name":"why-would-i-start-a-blog","title":"Why would I start a blog?","created":"2026-07-09T00:05:22+02:00","modified":null,"tags":["Meta"],"topic":null,"thumbnail":null,"is_featured":true,"card_label":"Introduction","subtitle":"Or, how to get yourself out there","gradient":"blog-card-grad-0"}
+  {"name":"why-would-i-start-a-blog","title":"Why would I start a blog?","created":"2026-07-09T00:05:22+02:00","modified":null,"tags":["Meta"],"topic":null,"thumbnail":null,"is_featured":true,"card_label":"Introduction","subtitle":"Or, how to get yourself out there","gradient":"blog-card-grad-0"},
+  {"name":"engineering-lessons-from-building-ai-first","title":"Engineering Lessons from Building an AI-First Feature","created":"2026-07-13T10:00:00+02:00","modified":null,"tags":["AI","Engineering"],"topic":null,"thumbnail":null,"is_featured":false,"card_label":"Retrospective","subtitle":"What changed beyond the code","gradient":"blog-card-grad-5"}
 ]
