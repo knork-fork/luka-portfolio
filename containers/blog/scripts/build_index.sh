@@ -18,28 +18,9 @@ pick_gradient_class() {
     printf 'blog-card-grad-%s' "$((sum % GRADIENT_COUNT))"
 }
 
-# Dates come from git history, not the filesystem. Git preserves no
-# birth/mtime, so a clone, checkout, or regeneration resets those to "now" —
-# which both scrambles the post ordering and churns created/modified in
-# index.json on every build. Git's commit dates are stable and only advance
-# when a post's content actually changes. Fall back to filesystem times for
-# files not yet committed.
-created_epoch_of() {
-    local file="$1" epoch
-    epoch="$(git -C "$BLOG_DIR" log --diff-filter=A --follow --format='%ct' -- "$file" 2>/dev/null | tail -1)"
-    if [ -z "$epoch" ]; then
-        epoch="$(stat -c '%W' "$file")"
-        [ "$epoch" -eq 0 ] && epoch="$(stat -c '%Z' "$file")"
-    fi
-    printf '%s' "$epoch"
-}
-
-modified_epoch_of() {
-    local file="$1" epoch
-    epoch="$(git -C "$BLOG_DIR" log -1 --format='%ct' -- "$file" 2>/dev/null || true)"
-    [ -z "$epoch" ] && epoch="$(stat -c '%Y' "$file")"
-    printf '%s' "$epoch"
-}
+# A post's lastmod is sourced from blog metadata: use modified_at if set,
+# else created_at. Both are RFC-3339 (validated by validate_blog_templates.sh),
+# so they are emitted verbatim.
 
 if [ -d "$BLOGS_DIR" ] && [ -z "$(find "$BLOGS_DIR" -maxdepth 1 -mindepth 1 -name '*.md' -not -name '.gitkeep')" ]; then
     exit 0
@@ -82,6 +63,8 @@ while IFS=$'\t' read -r created_epoch file; do
     tags=$(meta_value "$file" tags)
     topic=$(meta_value "$file" topic)
     thumbnail=$(meta_value "$file" thumbnail)
+    created_at=$(meta_value "$file" created_at)
+    modified_at=$(meta_value "$file" modified_at)
 
     [ -z "$title" ] && title="$name"
     # Fall back to sane JSON defaults so --argjson never chokes on an empty value
@@ -89,9 +72,6 @@ while IFS=$'\t' read -r created_epoch file; do
     [ -z "$tags" ] && tags='[]'
     [ -z "$topic" ] && topic=null
     [ -z "$thumbnail" ] && thumbnail=null
-
-    created=$(date -d "@$created_epoch" --iso-8601=seconds)
-    modified=$(date -d "@$(modified_epoch_of "$file")" --iso-8601=seconds)
 
     # Gradient keyed on topic (falling back to title), matching how cards are coloured
     grad_key="$title"
@@ -103,20 +83,20 @@ while IFS=$'\t' read -r created_epoch file; do
         --arg title "$title" \
         --arg card_label "$card_label" \
         --arg subtitle "$subtitle" \
-        --arg created "$created" \
-        --arg modified "$modified" \
+        --arg created "$created_at" \
+        --arg modified "$modified_at" \
         --arg gradient "$gradient" \
         --argjson is_featured "$is_featured" \
         --argjson tags "$tags" \
         --argjson topic "$topic" \
         --argjson thumbnail "$thumbnail" \
-        '{name: $name, title: $title, created: $created, modified: $modified, tags: $tags, topic: $topic, thumbnail: $thumbnail, is_featured: $is_featured, card_label: $card_label, subtitle: $subtitle, gradient: $gradient}')
+        '{name: $name, title: $title, created: $created, modified: ($modified | if . == "" or . == "null" then null else . end), tags: $tags, topic: $topic, thumbnail: $thumbnail, is_featured: $is_featured, card_label: $card_label, subtitle: $subtitle, gradient: $gradient}')
 
     entries=$(jq -n --argjson arr "$entries" --argjson entry "$entry" '$arr + [$entry]')
 done < <(
     find "$BLOGS_DIR" -maxdepth 1 -mindepth 1 -name '*.md' -not -name '.gitkeep' -print0 |
         while IFS= read -r -d '' f; do
-            printf '%s\t%s\n' "$(created_epoch_of "$f")" "$f"
+            printf '%s\t%s\n' "$(date -d "$(meta_value "$f" created_at)" +%s)" "$f"
         done | sort -t"$(printf '\t')" -k1,1n -k2,2V
 )
 

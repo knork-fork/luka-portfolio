@@ -101,8 +101,9 @@ while IFS= read -r -d '' file; do
     [ -z "$title" ] && title="$stem"
     subtitle="$(meta_value "$file" subtitle)"
 
-    # Quiet metadata row: tag pills (from the post's metadata) + last-modified
-    # date (from index.json, which build_index.sh derives from git history).
+    # Quiet metadata row: tag pills (from the post's metadata) + a single date
+    # line (from index.json). Show "Updated <modified_at>" when the post has a
+    # modified_at; otherwise "Published <created_at>".
     tags_html=""
     while IFS= read -r tag; do
         [ -n "$tag" ] || continue
@@ -113,10 +114,18 @@ while IFS= read -r -d '' file; do
 
     date_html=""
     iso_modified="$(jq -r --arg n "$stem" '.[] | select(.name == $n) | .modified // empty' "$INDEX" 2>/dev/null || true)"
+    iso_created="$(jq -r --arg n "$stem" '.[] | select(.name == $n) | .created // empty' "$INDEX" 2>/dev/null || true)"
     if [ -n "$iso_modified" ]; then
-        human_date="$(date -d "$iso_modified" '+%b %-d, %Y' 2>/dev/null || true)"
+        date_label="Updated"
+        iso_date="$iso_modified"
+    else
+        date_label="Published"
+        iso_date="$iso_created"
+    fi
+    if [ -n "$iso_date" ]; then
+        human_date="$(date -d "$iso_date" '+%b %-d, %Y' 2>/dev/null || true)"
         [ -n "$human_date" ] && \
-            date_html="        <time class=\"post-date\" datetime=\"${iso_modified%%T*}\">Updated $human_date</time>"$'\n'
+            date_html="        <time class=\"post-date\" datetime=\"${iso_date%%T*}\">$date_label $human_date</time>"$'\n'
     fi
 
     # Gradient class (same as this post's blog card) for the full-width header.
