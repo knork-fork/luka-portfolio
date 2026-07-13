@@ -18,7 +18,7 @@ created_at: 2026-07-13T10:00:00+02:00
 modified_at: null
 ### metadata
 
-This post accompanies a major feature release I worked on. You can read more about the feature itself on [LinkedIn](#).
+This post accompanies a major feature release I worked on. You can read more about the feature itself on [LinkedIn](https://www.linkedin.com/posts/lukaknezic98_gis-ai-geospatialai-share-7482367298541056001-_Rtl/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB5fMIsBXDziSG1D7k2XmAW1y9Kg_WV35vY).
 
 ## A new label
 
@@ -115,4 +115,4 @@ You may have noticed that this post doesn't really reinvent the wheel or offer s
 
 That isn't to say they don't exist, but I deliberately chose to leave them for a future post. This one was already long enough, and I wanted to focus on the lessons learned directly from the project I worked on.
 
-Expect more in the near future. If you have any questions or want to discuss the topic, feel free to reach out (or leave a comment on the [LinkedIn post](#)).
+Expect more in the near future. If you have any questions or want to discuss the topic, feel free to reach out (or leave a comment on the [LinkedIn post](https://www.linkedin.com/posts/lukaknezic98_gis-ai-geospatialai-share-7482367298541056001-_Rtl/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB5fMIsBXDziSG1D7k2XmAW1y9Kg_WV35vY)).
