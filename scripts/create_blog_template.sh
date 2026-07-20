@@ -93,6 +93,10 @@ npm run build
 
 <img src="/static/images/embed.png" alt="Image with caption">
 
+## Videos
+
+<video src="/static/blog_media/factorio.webm" autoplay loop muted playsinline data-caption="A Factorio factory humming along — more output, same bottlenecks."></video>
+
 ## Closing words
 Replace this content with your own. Happy writing!
 EOF

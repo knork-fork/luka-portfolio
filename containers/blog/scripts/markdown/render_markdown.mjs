@@ -29,22 +29,25 @@ const md = new MarkdownIt({
   },
 }).use(taskLists); // GFM tables + strikethrough are on by default in markdown-it
 
-// Turn a standalone image (a line that is only an <img>, optionally wrapped in
-// a single <p> as markdown-it does for `![alt](src)`) into a <figure> so the
-// stylesheet can center and frame it. When the image carries a non-empty alt,
-// that text becomes the visible <figcaption>. Inline images sitting inside a
-// paragraph of prose are left untouched — their line has other content, so the
-// anchored ^...$ match never fires.
+// Turn a standalone image or video (a line that is only an <img>/<video>,
+// optionally wrapped in a single <p> as markdown-it does for `![alt](src)`)
+// into a <figure> so the stylesheet can center and frame it. When an <img>
+// carries a non-empty alt, that text becomes the visible <figcaption>. Inline
+// media sitting inside a paragraph of prose is left untouched — its line has
+// other content, so the anchored ^...$ match never fires.
 function figurifyImages(html) {
   return html.replace(
-    /^([ \t]*)(?:<p>\s*)?(<img\b[^>]*?>)(?:\s*<\/p>)?[ \t]*$/gim,
-    (_whole, indent, imgTag) => {
-      const altMatch = imgTag.match(/\balt\s*=\s*(?:"([^"]*)"|'([^']*)')/i);
-      // Reuse the alt value verbatim: markdown-it has already HTML-escaped it in
-      // the attribute, and raw-HTML bodies are author-trusted.
-      const alt = (altMatch ? (altMatch[1] ?? altMatch[2] ?? '') : '').trim();
-      const caption = alt ? `${indent}  <figcaption>${alt}</figcaption>\n` : '';
-      return `${indent}<figure class="post-figure">\n${indent}  ${imgTag}\n${caption}${indent}</figure>`;
+    /^([ \t]*)(?:<p>\s*)?(<img\b[^>]*?>|<video\b[^>]*>(?:[\s\S]*?<\/video>)?)(?:\s*<\/p>)?[ \t]*$/gim,
+    (_whole, indent, mediaTag) => {
+      // Caption text comes from an <img>'s alt, or a <video>'s data-caption
+      // (video has no alt). Reused verbatim: markdown-it has already
+      // HTML-escaped attribute values, and raw-HTML bodies are author-trusted.
+      const capMatch = mediaTag.match(
+        /\b(?:alt|data-caption)\s*=\s*(?:"([^"]*)"|'([^']*)')/i,
+      );
+      const cap = (capMatch ? (capMatch[1] ?? capMatch[2] ?? '') : '').trim();
+      const caption = cap ? `${indent}  <figcaption>${cap}</figcaption>\n` : '';
+      return `${indent}<figure class="post-figure">\n${indent}  ${mediaTag}\n${caption}${indent}</figure>`;
     },
   );
 }

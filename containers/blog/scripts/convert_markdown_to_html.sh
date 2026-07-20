@@ -24,7 +24,7 @@ mkdir -p "$OUTPUT_DIR"
 
 # Docker image that renders markdown bodies to HTML in bulk (see scripts/markdown/).
 # Bump the tag whenever scripts/markdown/ changes to force a rebuild.
-MD_IMAGE="blog-markdown:2"
+MD_IMAGE="blog-markdown:3"
 
 # Scratch space shared with the renderer container: bodies in, HTML fragments out.
 # Kept inside the repo (under $HOME) because snap-confined Docker cannot bind-mount /tmp.
