@@ -89,6 +89,10 @@ npm run build
 | Lists      | Yes       |
 | Codeblocks | Yes       |
 
+## Images
+
+<img src="/static/images/embed.png" alt="Image with caption">
+
 ## Closing words
 Replace this content with your own. Happy writing!
 EOF

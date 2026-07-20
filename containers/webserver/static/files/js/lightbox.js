@@ -28,6 +28,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  document.querySelectorAll('.post-content img').forEach(function (el) {
+    el.addEventListener('click', function () {
+      open(el.currentSrc || el.src);
+    });
+  });
+
   document.querySelectorAll('.showcase-card').forEach(function (card) {
     card.addEventListener('click', function () {
       card.classList.toggle('expanded');
