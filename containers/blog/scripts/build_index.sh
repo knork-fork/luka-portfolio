@@ -65,6 +65,7 @@ while IFS=$'\t' read -r created_epoch file; do
     thumbnail=$(meta_value "$file" thumbnail)
     created_at=$(meta_value "$file" created_at)
     modified_at=$(meta_value "$file" modified_at)
+    force_gradient=$(meta_value "$file" force_gradient)
 
     [ -z "$title" ] && title="$name"
     # Fall back to sane JSON defaults so --argjson never chokes on an empty value
@@ -73,10 +74,15 @@ while IFS=$'\t' read -r created_epoch file; do
     [ -z "$topic" ] && topic=null
     [ -z "$thumbnail" ] && thumbnail=null
 
-    # Gradient keyed on topic (falling back to title), matching how cards are coloured
-    grad_key="$title"
-    [ -n "$topic" ] && [ "$topic" != "null" ] && grad_key="$topic"
-    gradient=$(pick_gradient_class "$grad_key")
+    # Gradient keyed on topic (falling back to title), matching how cards are coloured.
+    # A non-null force_gradient in the metadata overrides this deterministic pick.
+    if [ -n "$force_gradient" ] && [ "$force_gradient" != "null" ]; then
+        gradient="$force_gradient"
+    else
+        grad_key="$title"
+        [ -n "$topic" ] && [ "$topic" != "null" ] && grad_key="$topic"
+        gradient=$(pick_gradient_class "$grad_key")
+    fi
 
     entry=$(jq -n \
         --arg name "$name" \

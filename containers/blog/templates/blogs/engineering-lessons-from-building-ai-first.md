@@ -2,6 +2,7 @@
 title: Engineering Lessons from Building an AI-First Feature
 subtitle: What changed beyond the code
 card_label: Retrospective
+force_gradient: null
 
 seo_description: Practical lessons from building an AI-first product feature, covering code review, architectural decision records, service boundaries, and R&D.
 embed_text: What building an AI-first feature changed about code review, technical decisions, service boundaries, and research.

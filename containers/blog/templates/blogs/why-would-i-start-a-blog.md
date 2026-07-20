@@ -2,6 +2,7 @@
 title: Why would I start a blog?
 subtitle: Or, how to get yourself out there
 card_label: Introduction
+force_gradient: null
 
 seo_description: A first post about writing, static blogs, SEO, and keeping a human voice in the age of AI slop.
 embed_text: Why this blog exists, how it was built, and why writing still feels worth doing.

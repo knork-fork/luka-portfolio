@@ -24,6 +24,7 @@ cat > "${OUT_FILE}" <<EOF
 title: Blog post title
 subtitle: A short subtitle
 card_label: Category
+force_gradient: null
 
 seo_description: A concise, search-friendly description of this post.
 embed_text: A short summary used when this post is shared or embedded.
