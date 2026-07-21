@@ -98,4 +98,4 @@ It is however not always obvious how productivity can be improved, as real-world
 
 This post should then serve as a reminder that sometimes the most productive thing we can do is slow down and **think**: question the scope, simplify the solution, improve the process, or avoid creating unnecessary work in the first place.
 
-If you want to discuss the topic or have examples of productivity, feel free to reach out (or leave a comment on the LinkedIn post).
+If you want to discuss the topic or have examples of productivity, feel free to reach out (or leave a comment on the [LinkedIn post](https://www.linkedin.com/posts/lukaknezic98_ai-productivity-softwareengineering-share-7485253257695580160-aul1/?highlightedUpdateUrn=urn%3Ali%3Aactivity%3A7485253258471661568&highlightedUpdateType=SOCIAL_SHARE&origin=SOCIAL_SHARE&utm_source=share&utm_medium=member_desktop&rcm=ACoAAB5fMIsBXDziSG1D7k2XmAW1y9Kg_WV35vY)).
