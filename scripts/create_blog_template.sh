@@ -96,7 +96,7 @@ npm run build
 
 ## Videos
 
-<video src="/static/blog_media/factorio.webm" autoplay loop muted playsinline data-caption="A Factorio factory humming along — more output, same bottlenecks."></video>
+<video src="/static/blog_media/factorio_speed.webm" autoplay loop muted playsinline data-caption="A Factorio factory humming along — more output, same bottlenecks."></video>
 
 ## Closing words
 Replace this content with your own. Happy writing!
