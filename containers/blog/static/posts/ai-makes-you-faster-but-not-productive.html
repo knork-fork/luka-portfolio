@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="An exploration of why AI can increase the speed of individual work without necessarily improving overall productivity or delivery.">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta property="og:description" content="Why working faster with AI does not automatically translate into greater productivity or faster delivery.">
+  <meta property="og:title" content="AI Makes You Faster, But Not More Productive">
+  <meta property="og:url" content="https://luka-knezic.com/blog/ai-makes-you-faster-but-not-productive">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="Luka Knežić">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI Makes You Faster, But Not More Productive">
+  <meta name="twitter:description" content="Why working faster with AI does not automatically translate into greater productivity or faster delivery.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Makes You Faster, But Not More Productive — Luka Knežić</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
+  <link rel="icon" type="image/x-icon" href="/static/favicon/favicon.ico">
+  <link rel="stylesheet" href="/static/dist/style.e58ff8d8.css" data-build="style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <ul class="navbar-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/projects">Projects</a></li>
+      <li><a href="/blog" class="active">Blog</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+<main class="post">
+  <header class="post-header blog-card-grad-4">
+    <div class="post-header-inner">
+      <a class="post-back" href="/blog">&larr; Back to Blog</a>
+      <div class="post-meta">
+        <ul class="post-tags">
+          <li><a class="post-tag" href="/blog?tags=ai">AI</a></li>
+          <li><a class="post-tag" href="/blog?tags=engineering">Engineering</a></li>
+          <li><a class="post-tag" href="/blog?tags=productivity">Productivity</a></li>
+        </ul>
+        <time class="post-date" datetime="2026-07-21">Published Jul 21, 2026</time>
+      </div>
+      <h1 class="post-title">AI Makes You Faster, But Not More Productive</h1>
+      <p class="post-lead">Why speed alone does not always lead to faster delivery</p>
+    </div>
+  </header>
+  <div class="post-body">
+    <article class="post-card">
+      <div class="post-content">
+<h2>Force multipliers</h2>
+<p>Just a few years ago, “10x developers” were a hot topic - superstar developers who could replace entire teams by themselves, and deliver features faster than anyone else.</p>
+<p>After hype cooled down and the dust settled it turned out a team of non-10x developers who were team players were a much better fit, as all that output also had to be maintained (and preferably documented).</p>
+<p>Fast forward to today, and now we have “100x developers” who can use AI to outperform and outproduce entire departments and spit out features faster than they could be reviewed or tested.</p>
+<p>Skipping past the fact that history repeated itself, the difference this time around is that the force multiplier is not an individual, but a tool given to an individual. This is why it is important to note that “force multiplier” is not a standalone property, but rather a multiplication of the individual using the tool (with all the positive and negative connotations that may bring).</p>
+<h2>A video game analogy</h2>
+<p>In order to better demonstrate my point, I’m going to be using Factorio as an analogy.</p>
+<p>While some consider it Minecraft with an Excel spreadsheet, in a broader sense it’s actually a game about optimizing pipelines and processes, and finding and fixing bottlenecks without just throwing in more resources in the hope of a problem going away.</p>
+<p>If that sounds familiar, you’ll quickly realize why the Factorio community overlaps so much with engineering and software development communities.</p>
+<figure class="post-figure">
+  <img src="/static/blog_media/factorio_assembler.jpg" alt="A humble assembler with no upgrades">
+  <figcaption>A humble assembler with no upgrades</figcaption>
+</figure>
+<p>In Factorio, an assembler is the bread and butter of every factory. It’s a machine that takes in raw materials and produces some form of a product.</p>
+<p>Thinking about it more generally, it’s a worker that uses resources to produce something of value.</p>
+<p>In order to get a complex, finished product, one would need to connect multiple assemblers together into something that closely resembles a process pipeline.</p>
+<p>If we are in the context of developing a feature, this pipeline would look something like this:</p>
+<ul>
+<li>Tech Specs</li>
+<li>Estimation</li>
+<li>Implementation</li>
+<li>Review</li>
+<li>Testing</li>
+<li>Delivery</li>
+</ul>
+<p>To simplify, we’ll transform a basic pipeline into a small factory with just two assemblers, where the first assembler produces gears, and the second assembler consumes those gears to produce a more complex item. This corresponds to a developer working on the implementation phase, and a second developer reviewing their work.</p>
+<h2>Need for speed</h2>
+<p>We wanted to speed up the development, so in the video shown below we have upgraded the assembler on the left with so-called speed modules (displayed as 4 blue square icons). These modules increase the crafting speed of an assembler, at the cost of increased electricity consumption.</p>
+<figure class="post-figure">
+  <video src="/static/blog_media/factorio_speed.webm" autoplay loop muted playsinline data-caption="Assembler on the left produces gears, assembler on the right consumes gears to produce a more complex item"></video>
+  <figcaption>Assembler on the left produces gears, assembler on the right consumes gears to produce a more complex item</figcaption>
+</figure>
+<p>This speed-optimized assembler represents a developer who is using AI to increase their output. If the same standard of quality is expected before the code reaches the next stage of the pipeline, then the reviewer still has just as much work to do as before.</p>
+<p>At first, the first assembler rapidly produces gears, but after a while the conveyor belt leading to the second assembler gets clogged up as the second assembler simply cannot keep up with the first one.</p>
+<p>The first assembler now often idles (wasting all those expensive speed modules) and the second assembler ends up being the bottleneck of the whole process, despite having no control over how quickly work is pushed into its stage of the process.</p>
+<p>If we take a look at the in-game production graph below, we can see that the first assembler is consuming around 30 iron plates per minute to supply the second assembler with gears, while the second assembler is producing 15 complex products per minute using those gears (the ratio is not an accident, it takes two iron plates and a single copper plate to produce one <a href="https://wiki.factorio.com/Automation_science_pack">automation science pack</a>).</p>
+<figure class="post-figure">
+  <img src="/static/blog_media/factorio_speed_graph.jpg" alt="Production rates shown on the left, and consumption rates shown on the right.">
+  <figcaption>Production rates shown on the left, and consumption rates shown on the right.</figcaption>
+</figure>
+<h2>Slow down</h2>
+<p>What if, instead, the two developers worked in harmony and they found a way to spend some of their allocated time improving the process rather than focusing on completing the feature work and then handing it off to the next stage as soon as possible? The formula is simple - decreasing the amount of total work that needs to be done means the job is done faster without sacrificing quality.</p>
+<p>The video below shows the same two assemblers, only this time both are equipped with productivity modules (4 orange square icons). These modules increase the amount of output produced per unit of input, at the cost of increased electricity consumption <strong>but also slower crafting speed</strong>.</p>
+<figure class="post-figure">
+  <video src="/static/blog_media/factorio_prod.webm" autoplay loop muted playsinline data-caption="Notice the left assembler being a lot less idle now that it's slower"></video>
+  <figcaption>Notice the left assembler being a lot less idle now that it's slower</figcaption>
+</figure>
+<p>Not only does the first assembler now idle less, productivity modules in both assemblers cause the whole production line to use less raw materials, and productivity bonuses stack at each additional assembler in the production chain - unlike speed, which only affects that single assembler.</p>
+<p>Comparing the first graph to this one, we can see that the second assembler is now producing 12 science packs per minute (slightly down from previous 15 per minute), but the first assembler is now consuming only 4.8 iron plates per minute, which means that the overall process is now more than six times cheaper in raw iron cost.</p>
+<figure class="post-figure">
+  <img src="/static/blog_media/factorio_prod_graph.jpg" alt="Much cheaper automation science packs">
+  <figcaption>Much cheaper automation science packs</figcaption>
+</figure>
+<p>You may wonder why it’s okay that we settle for a slightly lower rate of those science packs, but remember - the productivity stacks, so if we put productivity modules into the consumer of those science packs (the lab building that consumes science packs to research new technologies on the tech tree), then we’ll need less science packs to achieve the same result.</p>
+<p>This translates well to software development - if we can reduce the amount of code that needs to be written (by e.g. limiting the scope), then we also reduce the amount of code review that needs to be done, reduce the amount of testing that needs to be done and so on.</p>
+<h2>How to be productive</h2>
+<p>If we were to compare Factorio’s speed and productivity modules side by side in a vacuum, speed modules would appear faster and thus look more enticing - the reality is however that productivity is a better choice in almost all cases because its effects compound and stack.</p>
+<p>It is however not always obvious how productivity can be improved, as real-world is not as simple as inserting modules into a digital machine.</p>
+<p>This post should then serve as a reminder that sometimes the most productive thing we can do is slow down and <strong>think</strong>: question the scope, simplify the solution, improve the process, or avoid creating unnecessary work in the first place.</p>
+<p>If you want to discuss the topic or have examples of productivity, feel free to reach out (or leave a comment on the LinkedIn post).</p>
+      </div>
+    </article>
+  </div>
+</main>
+
+  <footer class="footer">
+    <ul class="footer-socials">
+      <li>
+        <a href="https://github.com/knork-fork" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.268 2.75 1.026A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.026 2.747-1.026.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        </a>
+      </li>
+      <li>
+        <a href="https://linkedin.com/in/lukaknezic98" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zM6.84 20.452H3.834V9H6.84v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+      </li>
+    </ul>
+    <span class="footer-copy">&copy; 2026 Luka Knežić</span>
+  </footer>
+
+  <script src="/static/dist/blog.5765d690.js" data-build="blog.js"></script>
+  <script src="/static/dist/lightbox.7c1fd715.js" data-build="lightbox.js"></script>
+</body>
+</html>

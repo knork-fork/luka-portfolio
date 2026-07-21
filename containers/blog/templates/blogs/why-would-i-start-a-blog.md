@@ -8,7 +8,7 @@ seo_description: A first post about writing, static blogs, SEO, and keeping a hu
 embed_text: Why this blog exists, how it was built, and why writing still feels worth doing.
 
 is_published: true
-is_featured: true
+is_featured: false
 
 tags: ["Meta"]
 topic: null
